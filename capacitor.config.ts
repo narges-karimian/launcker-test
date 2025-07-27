@@ -4,19 +4,35 @@ const config: CapacitorConfig = {
   appId: 'com.demo.app',
   appName: 'capgoTestVueApp',
   webDir: 'dist',
+  server: {
+    androidScheme: 'https',
+    cleartext: true,
+    allowNavigation: [
+      'https://sign-sandbox.farashenasa.ir/*',
+      'https://capgo.app/*',
+      'https://aasa-tester.capgo.app/*',
+      'https://web.capgo.app/*',
+      'https://google.com/*',
+      'http://localhost:*',
+      'http://127.0.0.1:*'
+    ]
+  },
   plugins: {
     extConfig: {},
     EdgeToEdge: {
       backgroundColor: '#ffffff'
     },
-    // Add this configuration for better WebView handling
+    // Add InAppBrowser configuration
     InAppBrowser: {
-      // Add any specific InAppBrowser configuration if needed
+      // Configure allowed domains
+      allowedDomains: [
+        'sign-sandbox.farashenasa.ir',
+        'capgo.app',
+        'aasa-tester.capgo.app',
+        'web.capgo.app',
+        'google.com'
+      ]
     }
-  },
-  // Add server configuration for development
-  server: {
-    androidScheme: 'https'
   }
 };
 
