@@ -1,13 +1,9 @@
 workflows:
   ionic-capacitor-ios-workflow-optimized:
-    name: Capacitor iOS Workflow (Optimized)
+    name: Capacitor iOS Workflow (Optimized with Cache)
     max_build_duration: 60
     environment:
       node: latest
-      cache:
-        - node_modules
-        - ~/.bun
-        - ios/App/Pods
     scripts:
       - name: Install Bun
         script: |
