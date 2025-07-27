@@ -6,16 +6,16 @@ workflows:
       groups:
         - capgo
     scripts:
-    - name: Build
-      script: | 
-        npm install
-        npm run build
-    - name: Install npm dependencies for Ionic project
-      script: |
-        npx @capgo/cli login $CAPGO_TOKEN
-    - name: Update dependencies and copy web assets to native project
-      script: | 
-        npx cap sync
-    - name: Upload to Capgo
-      script: |
-        npx @capgo/cli upload
+      - name: Build
+        script: |
+          bun install
+          bun run build
+      - name: Install npm dependencies for Ionic project
+        script: |
+          npx @capgo/cli login $CAPGO_TOKEN
+      - name: Update dependencies and copy web assets to native project
+        script: |
+          npx cap sync
+      - name: Upload to Capgo
+        script: |
+          npx @capgo/cli upload
