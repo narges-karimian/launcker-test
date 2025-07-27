@@ -152,7 +152,8 @@ import { onMounted, onUnmounted } from "vue";
 import { ToolBarType, BackgroundColor } from "@capgo/inappbrowser";
 import { Capacitor } from "@capacitor/core";
 
-const WEB_URL = "https://sign-sandbox.farashenasa.ir/";
+const WEB_URL =
+  "https://test-online.farashenasa.ir/?uniqueKey=9g32653178-0880245344";
 const isIOS = Capacitor.getPlatform() === "ios";
 const isAndroid = Capacitor.getPlatform() === "android";
 
