@@ -148,13 +148,15 @@ import {
   IonGrid,
   IonButtons,
 } from "@ionic/vue";
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { ToolBarType, BackgroundColor } from "@capgo/inappbrowser";
 import { Capacitor } from "@capacitor/core";
 
 const WEB_URL = "https://sign-sandbox.farashenasa.ir/";
 const isIOS = Capacitor.getPlatform() === "ios";
 const isAndroid = Capacitor.getPlatform() === "android";
+
+let listeners: any[] = [];
 
 async function openWebWithPickerMaterial() {
   const picker = await InAppBrowser.openWebView({
@@ -721,60 +723,98 @@ async function openBrokenUrlWithButton() {
 onMounted(async () => {
   console.log("mounted");
 
-  InAppBrowser.addListener("messageFromWebview", async (msg) => {
-    console.log("MESSAGE FROM WEB VIEW", msg);
+  // Store listener references for cleanup
+  const messageListener = await InAppBrowser.addListener(
+    "messageFromWebview",
+    async (msg) => {
+      console.log("MESSAGE FROM WEB VIEW", msg);
 
-    const message = (msg.detail.message as string) ?? "";
-    if (message === "close") {
-      // Send a message back to the webview asking for confirmation
-      await InAppBrowser.postMessage({
-        detail: {
-          action: "confirmClose",
-          message: "Are you sure you want to close?",
-        },
-      });
-      console.log("confirmClose send");
-    }
-    // If the message confirms the close action, close the webview
-    else if (message === "closeConfirmed") {
-      await InAppBrowser.close();
-      console.log("close confirmed");
-    }
-    if (message === "clear-specific") {
-      console.log("magic");
-      const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
-      if (cookies.magicCount) {
-        console.log("del magic count");
-        InAppBrowser.clearCookies({ url: WEB_URL });
+      const message = (msg.detail.message as string) ?? "";
+      if (message === "close") {
+        await InAppBrowser.postMessage({
+          detail: {
+            action: "confirmClose",
+            message: "Are you sure you want to close?",
+          },
+        });
+        console.log("confirmClose send");
+      } else if (message === "closeConfirmed") {
+        await InAppBrowser.close();
+        console.log("close confirmed");
+      }
+      if (message === "clear-specific") {
+        console.log("magic");
+        const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
+        if (cookies.magicCount) {
+          console.log("del magic count");
+          InAppBrowser.clearCookies({ url: WEB_URL });
+        }
+      }
+      if (message === "clear-all") {
+        console.log("magic (clear all)");
+        const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
+        if (cookies.magicCount) {
+          console.log("del magic count");
+          InAppBrowser.clearAllCookies();
+        }
       }
     }
-    if (message === "clear-all") {
-      console.log("magic (clear all)");
-      const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
-      if (cookies.magicCount) {
-        console.log("del magic count");
-        InAppBrowser.clearAllCookies();
-      }
+  );
+
+  const buttonListener = await InAppBrowser.addListener(
+    "buttonNearDoneClick",
+    async (msg) => {
+      await InAppBrowser.setUrl({ url: "https://web.capgo.app/login" });
+    }
+  );
+
+  const urlChangeListener = await InAppBrowser.addListener(
+    "urlChangeEvent",
+    (event) => {
+      console.log("URL changed:", event.url);
+    }
+  );
+
+  const pageLoadedListener = await InAppBrowser.addListener(
+    "browserPageLoaded",
+    () => {
+      console.log("Page loaded");
+    }
+  );
+
+  const pageErrorListener = await InAppBrowser.addListener(
+    "pageLoadError",
+    () => {
+      console.log("Page load error");
+    }
+  );
+
+  const confirmBtnListener = await InAppBrowser.addListener(
+    "confirmBtnClicked",
+    (event) => {
+      console.log("Confirm button clicked:", event.url);
+    }
+  );
+
+  // Store all listeners for cleanup
+  listeners = [
+    messageListener,
+    buttonListener,
+    urlChangeListener,
+    pageLoadedListener,
+    pageErrorListener,
+    confirmBtnListener,
+  ];
+});
+
+// Add cleanup on component unmount
+onUnmounted(() => {
+  console.log("Cleaning up InAppBrowser listeners");
+  listeners.forEach((listener) => {
+    if (listener && typeof listener.remove === "function") {
+      listener.remove();
     }
   });
-  InAppBrowser.addListener("buttonNearDoneClick", async (msg) => {
-    await InAppBrowser.setUrl({ url: "https://web.capgo.app/login" });
-  });
-
-  InAppBrowser.addListener("urlChangeEvent", (event) => {
-    console.log("URL changed:", event.url);
-  });
-
-  InAppBrowser.addListener("browserPageLoaded", () => {
-    console.log("Page loaded");
-  });
-
-  InAppBrowser.addListener("pageLoadError", () => {
-    console.log("Page load error");
-  });
-
-  InAppBrowser.addListener("confirmBtnClicked", (event) => {
-    console.log("Confirm button clicked:", event.url);
-  });
+  listeners = [];
 });
 </script>

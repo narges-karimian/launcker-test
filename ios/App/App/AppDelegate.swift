@@ -15,6 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            didFinishLaunchingWithOptions: launchOptions
 //        )
 
+        // Configure WebView privacy settings
+        if #available(iOS 14.0, *) {
+            // Set WebView privacy settings
+            let webView = WKWebView()
+            webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
+        }
+
         return true
     }
 

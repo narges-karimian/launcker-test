@@ -51,36 +51,53 @@ import {
   IonRow,
   IonGrid,
 } from "@ionic/vue";
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { InAppBrowser } from "@capgo/inappbrowser";
 
 // const WEB_URL = "https://capacitor-inappbrowser-test-webapp.wcaleniewolny.me/"
 const WEB_URL = "https://capgo.app";
 
+let listeners: any[] = [];
+
 onMounted(async () => {
   console.log("mounted");
 
-  InAppBrowser.addListener("messageFromWebview", async (msg) => {
-    console.log("MESSAGE FROM WEB VIEW", msg);
+  const messageListener = await InAppBrowser.addListener(
+    "messageFromWebview",
+    async (msg) => {
+      console.log("MESSAGE FROM WEB VIEW", msg);
 
-    const message = (msg.detail.message as string) ?? "";
-    if (message === "clear-specific") {
-      console.log("magic");
-      const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
-      if (cookies.magicCount) {
-        console.log("del magic count");
-        InAppBrowser.clearCookies({ url: WEB_URL });
+      const message = (msg.detail.message as string) ?? "";
+      if (message === "clear-specific") {
+        console.log("magic");
+        const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
+        if (cookies.magicCount) {
+          console.log("del magic count");
+          InAppBrowser.clearCookies({ url: WEB_URL });
+        }
+      }
+      if (message === "clear-all") {
+        console.log("magic (clear all)");
+        const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
+        if (cookies.magicCount) {
+          console.log("del magic count");
+          InAppBrowser.clearAllCookies();
+        }
       }
     }
-    if (message === "clear-all") {
-      console.log("magic (clear all)");
-      const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
-      if (cookies.magicCount) {
-        console.log("del magic count");
-        InAppBrowser.clearAllCookies();
-      }
+  );
+
+  listeners = [messageListener];
+});
+
+onUnmounted(() => {
+  console.log("Cleaning up HomePage InAppBrowser listeners");
+  listeners.forEach((listener) => {
+    if (listener && typeof listener.remove === "function") {
+      listener.remove();
     }
   });
+  listeners = [];
 });
 </script>
 

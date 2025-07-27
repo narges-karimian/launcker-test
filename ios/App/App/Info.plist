@@ -92,5 +92,11 @@
   <array>
     <string>remote-notification</string>
   </array>
+	<key>WKAppBoundDomains</key>
+	<array>
+		<string>capgo.app</string>
+		<string>sign-sandbox.farashenasa.ir</string>
+		<string>aasa-tester.capgo.app</string>
+	</array>
 </dict>
 </plist>
