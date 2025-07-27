@@ -11,345 +11,428 @@
 
     <ion-content :fullscreen="true">
       <ion-grid style="height: 100%">
-        <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 100%;">
-          <ion-col size="auto" style="text-align: center;">
+        <ion-row
+          class="ion-align-items-center ion-justify-content-center"
+          style="height: 100%"
+        >
+          <ion-col size="auto" style="text-align: center">
             <strong>openWebView</strong>
             <ion-button @click="() => openWeb()">web simple open</ion-button>
-            <ion-button @click="() => openWebDarkMode()">web with script dark reader</ion-button>
-            <ion-button v-if="isAndroid" @click="() => openWebWithPickerMaterial()">web with picker material (Android)</ion-button>
-            <ion-button v-if="isAndroid" @click="() => openWebWithPickerOld()">web with picker old (Android)</ion-button>
-            <ion-button v-if="isIOS" @click="() => openWebWithPickerOld()">web with picker</ion-button>
-            <ion-button @click="() => openWebWithHeaders()">web with headers</ion-button>
-            <ion-button @click="() => openWebWithCredentials()">web with credentials</ion-button>
-            <ion-button @click="() => openWebWithCustomToolbar()">web with custom toolbar</ion-button>
-            <ion-button @click="() => openWebWithoutNativeNav()">web without native nav</ion-button>
-            <ion-button @click="() => openWebWithReload()">web with reload</ion-button>
-            <ion-button @click="() => openWebWithCloseModal()">web with close modal</ion-button>
-            <ion-button @click="() => openWebWithCustomButton()">web with custom button</ion-button>
-            <ion-button @click="() => openWebWithCustomButtonSVG()">web with custom button svg</ion-button>
-            <ion-button @click="() => openWebWithMediaCapture()">web with media capture</ion-button>
-            <ion-button @click="() => openWebWithMicrophone()">web with microphone</ion-button>
-            <ion-button @click="() => openWebWithMultipleUpload()">web with multiple upload</ion-button>
-            <ion-button @click="() => openWebWithSingleUpload()">web with single upload</ion-button>
-            <ion-button @click="() => openWebWithWebcam()">web with webcam test</ion-button>
-            <ion-button @click="() => openWebWithActivityToolbar()">web with activity toolbar</ion-button>
-            <ion-button @click="() => openWebWithNavigationToolbar()">web with navigation toolbar</ion-button>
-            <ion-button @click="() => openWebWithDefaultToolbar()">web with default toolbar</ion-button>
-            <ion-button @click="() => openWebWithTextZoom()">web with text zoom</ion-button>
-            <ion-button @click="() => openBlankWithCloseButton()">blank with floating close button</ion-button>
-            <ion-button @click="() => openBlankWithCloseButtonAndColor()">blank with floating close button and color</ion-button>
-            <ion-button @click="() => openWebWithShareSubject()">web with share subject</ion-button>
-            <ion-button @click="() => openWebWithDisclaimer()">web share with disclaimer</ion-button>
-            <ion-button @click="() => openWebWithAllOptions()">web with all options</ion-button>
-            <ion-button @click="() => openWithShowArrow()">web with just arrow</ion-button>
-            <ion-button @click="() => openFlohkids()">open flohkids.de</ion-button>
-            <ion-button @click="() => openBlankWithBidirectionalCommunication()">blank with bidirectional communication</ion-button>
-            <ion-button @click="() => openDeepLinkTest()">deep link test</ion-button>
-            <ion-button @click="() => openDeepLinkTestPrevent()">deep link test (prevent)</ion-button>
-            <ion-button @click="() => openBrokenUrlWithButton()">broken URL with button test</ion-button>
-          </ion-col>          
-          <ion-col size="auto" style="text-align: center;">
+            <ion-button @click="() => openWebDarkMode()"
+              >web with script dark reader</ion-button
+            >
+            <ion-button
+              v-if="isAndroid"
+              @click="() => openWebWithPickerMaterial()"
+              >web with picker material (Android)</ion-button
+            >
+            <ion-button v-if="isAndroid" @click="() => openWebWithPickerOld()"
+              >web with picker old (Android)</ion-button
+            >
+            <ion-button v-if="isIOS" @click="() => openWebWithPickerOld()"
+              >web with picker</ion-button
+            >
+            <ion-button @click="() => openWebWithHeaders()"
+              >web with headers</ion-button
+            >
+            <ion-button @click="() => openWebWithCredentials()"
+              >web with credentials</ion-button
+            >
+            <ion-button @click="() => openWebWithCustomToolbar()"
+              >web with custom toolbar</ion-button
+            >
+            <ion-button @click="() => openWebWithoutNativeNav()"
+              >web without native nav</ion-button
+            >
+            <ion-button @click="() => openWebWithReload()"
+              >web with reload</ion-button
+            >
+            <ion-button @click="() => openWebWithCloseModal()"
+              >web with close modal</ion-button
+            >
+            <ion-button @click="() => openWebWithCustomButton()"
+              >web with custom button</ion-button
+            >
+            <ion-button @click="() => openWebWithCustomButtonSVG()"
+              >web with custom button svg</ion-button
+            >
+            <ion-button @click="() => openWebWithMediaCapture()"
+              >web with media capture</ion-button
+            >
+            <ion-button @click="() => openWebWithMicrophone()"
+              >web with microphone</ion-button
+            >
+            <ion-button @click="() => openWebWithMultipleUpload()"
+              >web with multiple upload</ion-button
+            >
+            <ion-button @click="() => openWebWithSingleUpload()"
+              >web with single upload</ion-button
+            >
+            <ion-button @click="() => openWebWithWebcam()"
+              >web with webcam test</ion-button
+            >
+            <ion-button @click="() => openWebWithActivityToolbar()"
+              >web with activity toolbar</ion-button
+            >
+            <ion-button @click="() => openWebWithNavigationToolbar()"
+              >web with navigation toolbar</ion-button
+            >
+            <ion-button @click="() => openWebWithDefaultToolbar()"
+              >web with default toolbar</ion-button
+            >
+            <ion-button @click="() => openWebWithTextZoom()"
+              >web with text zoom</ion-button
+            >
+            <ion-button @click="() => openBlankWithCloseButton()"
+              >blank with floating close button</ion-button
+            >
+            <ion-button @click="() => openBlankWithCloseButtonAndColor()"
+              >blank with floating close button and color</ion-button
+            >
+            <ion-button @click="() => openWebWithShareSubject()"
+              >web with share subject</ion-button
+            >
+            <ion-button @click="() => openWebWithDisclaimer()"
+              >web share with disclaimer</ion-button
+            >
+            <ion-button @click="() => openWebWithAllOptions()"
+              >web with all options</ion-button
+            >
+            <ion-button @click="() => openWithShowArrow()"
+              >web with just arrow</ion-button
+            >
+            <ion-button @click="() => openFlohkids()"
+              >open flohkids.de</ion-button
+            >
+            <ion-button @click="() => openBlankWithBidirectionalCommunication()"
+              >blank with bidirectional communication</ion-button
+            >
+            <ion-button @click="() => openDeepLinkTest()"
+              >deep link test</ion-button
+            >
+            <ion-button @click="() => openDeepLinkTestPrevent()"
+              >deep link test (prevent)</ion-button
+            >
+            <ion-button @click="() => openBrokenUrlWithButton()"
+              >broken URL with button test</ion-button
+            >
+          </ion-col>
+          <ion-col size="auto" style="text-align: center">
             <strong>Open</strong>
             <ion-button @click="() => openSimple()">open simple</ion-button>
-            <ion-button @click="() => openWithOptions()">open with options</ion-button>
-            <ion-button @click="() => openWithInspectable()">open inspectable</ion-button>
+            <ion-button @click="() => openWithOptions()"
+              >open with options</ion-button
+            >
+            <ion-button @click="() => openWithInspectable()"
+              >open inspectable</ion-button
+            >
           </ion-col>
         </ion-row>
       </ion-grid>
-     
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { InAppBrowser } from '@capgo/inappbrowser';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCol, IonRow, IonBackButton, IonGrid, IonButtons } from '@ionic/vue';
-import { onMounted } from 'vue';
-import { ToolBarType, BackgroundColor } from '@capgo/inappbrowser';
-import { Capacitor } from '@capacitor/core';
+import { InAppBrowser } from "@capgo/inappbrowser";
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButton,
+  IonCol,
+  IonRow,
+  IonBackButton,
+  IonGrid,
+  IonButtons,
+} from "@ionic/vue";
+import { onMounted } from "vue";
+import { ToolBarType, BackgroundColor } from "@capgo/inappbrowser";
+import { Capacitor } from "@capacitor/core";
 
-const WEB_URL = "https://capgo.app"
-const isIOS = Capacitor.getPlatform() === 'ios'
-const isAndroid = Capacitor.getPlatform() === 'android'
+const WEB_URL = "https://sign-sandbox.farashenasa.ir/";
+const isIOS = Capacitor.getPlatform() === "ios";
+const isAndroid = Capacitor.getPlatform() === "android";
 
 async function openWebWithPickerMaterial() {
   const picker = await InAppBrowser.openWebView({
-    url: 'https://show-picker.glitch.me/demo.html',
+    url: "https://sign-sandbox.farashenasa.ir/",
     materialPicker: true,
-  })
-  console.log('picker', picker)
+  });
+  console.log("picker", picker);
 }
 
 async function openWebWithPickerOld() {
   const picker = await InAppBrowser.openWebView({
-    url: 'https://show-picker.glitch.me/demo.html',
-  })
-  console.log('picker', picker)
+    url: "https://sign-sandbox.farashenasa.ir/",
+  });
+  console.log("picker", picker);
 }
 
-
 async function openWeb() {
-  InAppBrowser.openWebView({ 
-    url: WEB_URL, 
-  })
+  InAppBrowser.openWebView({
+    url: WEB_URL,
+  });
 }
 
 async function openWebDarkMode() {
   // InAppBrowser.open({ url: WEB_URL, isInspectable: true } as any);
   const script =
-  "await import('https://unpkg.com/darkreader@4.9.89/darkreader.js');\n" +
-  "DarkReader.enable({ brightness: 100, contrast: 90, sepia: 10 });"
-  InAppBrowser.openWebView({ 
-    url: WEB_URL, 
-    isPresentAfterPageLoad: true, 
-    preShowScript: script, 
-  })
+    "await import('https://unpkg.com/darkreader@4.9.89/darkreader.js');\n" +
+    "DarkReader.enable({ brightness: 100, contrast: 90, sepia: 10 });";
+  InAppBrowser.openWebView({
+    url: WEB_URL,
+    isPresentAfterPageLoad: true,
+    preShowScript: script,
+  });
 }
 
 async function openWebWithHeaders() {
   InAppBrowser.openWebView({
-    url: 'https://www.whatismybrowser.com/detect/what-http-headers-is-my-browser-sending/',
+    url: "https://www.whatismybrowser.com/detect/what-http-headers-is-my-browser-sending/",
     headers: {
-      'Custom-Header': 'test-value',
-      'Authorization': 'Bearer test-token'
-    }
-  })
+      "Custom-Header": "test-value",
+      Authorization: "Bearer test-token",
+    },
+  });
 }
 
 async function openWebWithCredentials() {
   InAppBrowser.openWebView({
-    url: 'https://testpages.eviltester.com/styled/auth/basic-auth-results.html',
+    url: "https://testpages.eviltester.com/styled/auth/basic-auth-results.html",
     credentials: {
-      username: 'authorized',
-      password: 'password001'
-    }
-  })
+      username: "authorized",
+      password: "password001",
+    },
+  });
 }
 
 async function openWebWithDisclaimer() {
   InAppBrowser.openWebView({
     url: WEB_URL,
-    shareSubject: 'Share this website',
+    shareSubject: "Share this website",
     shareDisclaimer: {
-      title: 'Disclaimer',
-      message: 'This is a test disclaimer',
-      confirmBtn: 'Accept',
-      cancelBtn: 'Decline'
-    }
-  })
+      title: "Disclaimer",
+      message: "This is a test disclaimer",
+      confirmBtn: "Accept",
+      cancelBtn: "Decline",
+    },
+  });
 }
 
 async function openWebWithCustomToolbar() {
   InAppBrowser.openWebView({
     url: WEB_URL,
     toolbarType: ToolBarType.ACTIVITY,
-    toolbarColor: '#FF5733',
-    toolbarTextColor: '#B9FFC6',
-    showArrow: true
-  })
+    toolbarColor: "#FF5733",
+    toolbarTextColor: "#B9FFC6",
+    showArrow: true,
+  });
 }
 
 async function openWebWithoutNativeNav() {
   InAppBrowser.openWebView({
     url: WEB_URL,
     activeNativeNavigationForWebview: false,
-    disableGoBackOnNativeApplication: true
-  })
+    disableGoBackOnNativeApplication: true,
+  });
 }
 
 async function openWebWithReload() {
   InAppBrowser.openWebView({
     url: WEB_URL,
-    showReloadButton: true
-  })
+    showReloadButton: true,
+  });
 }
 
 async function openWebWithCloseModal() {
   InAppBrowser.openWebView({
     url: WEB_URL,
     closeModal: true,
-    closeModalTitle: 'Close Window',
-    closeModalDescription: 'Are you sure you want to close?',
-    closeModalOk: 'Yes, close',
-    closeModalCancel: 'No, stay'
-  })
+    closeModalTitle: "Close Window",
+    closeModalDescription: "Are you sure you want to close?",
+    closeModalOk: "Yes, close",
+    closeModalCancel: "No, stay",
+  });
 }
 
 async function openWebWithCustomButton() {
-  InAppBrowser.addListener('buttonNearDoneClick', async (msg) => {
-    console.log('buttonNearDoneClick', msg)
-    await InAppBrowser.setUrl({ url: 'https://google.com' })
-  })
+  InAppBrowser.addListener("buttonNearDoneClick", async (msg) => {
+    console.log("buttonNearDoneClick", msg);
+    await InAppBrowser.setUrl({ url: "https://google.com" });
+  });
   InAppBrowser.openWebView({
     url: WEB_URL,
     buttonNearDone: {
       ios: {
-        iconType: 'sf-symbol',
-        icon: 'star.fill'
+        iconType: "sf-symbol",
+        icon: "star.fill",
       },
       android: {
-        iconType: 'vector',
-        icon: 'ic_menu_share',
+        iconType: "vector",
+        icon: "ic_menu_share",
         width: 24,
-        height: 24
-      }
-    }
-  })
+        height: 24,
+      },
+    },
+  });
 }
 
 async function openWebWithCustomButtonSVG() {
-  InAppBrowser.addListener('buttonNearDoneClick', async (msg) => {
-    console.log('buttonNearDoneClick', msg)
-    await InAppBrowser.setUrl({ url: 'https://google.com' })
-  })
+  InAppBrowser.addListener("buttonNearDoneClick", async (msg) => {
+    console.log("buttonNearDoneClick", msg);
+    await InAppBrowser.setUrl({ url: "https://google.com" });
+  });
   InAppBrowser.openWebView({
     url: WEB_URL,
     buttonNearDone: {
       ios: {
-        iconType: 'asset',
-        icon: 'public/monkey.svg',
+        iconType: "asset",
+        icon: "public/monkey.svg",
       },
       android: {
-        iconType: 'asset',
-        icon: 'public/monkey.svg',
+        iconType: "asset",
+        icon: "public/monkey.svg",
         width: 24,
-        height: 24
-      }
-    }
-  })
+        height: 24,
+      },
+    },
+  });
 }
 
 async function openWebWithMediaCapture() {
   await InAppBrowser.openWebView({
-    url: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/capture',
-    title: 'Camera Test'
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/capture",
+    title: "Camera Test",
   });
 }
 
 async function openWebWithMicrophone() {
   InAppBrowser.openWebView({
-    url: 'https://webcammictest.com/check-mic.html',
-    title: 'Microphone Test'
-  })
+    url: "https://webcammictest.com/check-mic.html",
+    title: "Microphone Test",
+  });
 }
 
 async function openWebWithMultipleUpload() {
   InAppBrowser.openWebView({
-    url: 'https://www.patternfly.org/components/file-upload/multiple-file-upload',
-    title: 'Multiple File Upload Test'
-  })
+    url: "https://www.patternfly.org/components/file-upload/multiple-file-upload",
+    title: "Multiple File Upload Test",
+  });
 }
 
 async function openWebWithSingleUpload() {
   InAppBrowser.openWebView({
-    url: 'https://www.patternfly.org/components/file-upload/simple-file-upload',
-    title: 'Single File Upload Test'
-  })
+    url: "https://www.patternfly.org/components/file-upload/simple-file-upload",
+    title: "Single File Upload Test",
+  });
 }
 
 async function openWebWithWebcam() {
   InAppBrowser.openWebView({
-    url: 'https://webcammictest.com/',
-    title: 'Webcam Test'
-  })
+    url: "https://webcammictest.com/",
+    title: "Webcam Test",
+  });
 }
 
 async function openWebWithTextZoom() {
   InAppBrowser.openWebView({
     url: WEB_URL,
     textZoom: 150,
-    title: 'Text Zoom Test'
-  } as any)
+    title: "Text Zoom Test",
+  } as any);
 }
 
 async function openWebWithActivityToolbar() {
   InAppBrowser.openWebView({
     url: WEB_URL,
     toolbarType: ToolBarType.ACTIVITY,
-    title: 'Activity Toolbar Test'
-  })
+    title: "Activity Toolbar Test",
+  });
 }
 
 async function openWebWithNavigationToolbar() {
   InAppBrowser.openWebView({
     url: WEB_URL,
     toolbarType: ToolBarType.NAVIGATION,
-    title: 'Navigation Toolbar Test'
-  })
+    title: "Navigation Toolbar Test",
+  });
 }
 
 async function openWebWithDefaultToolbar() {
   InAppBrowser.openWebView({
     url: WEB_URL,
     toolbarType: ToolBarType.ACTIVITY,
-    title: 'Default Toolbar Test'
-  })
+    title: "Default Toolbar Test",
+  });
 }
 
 async function openWebWithShareSubject() {
   InAppBrowser.openWebView({
     url: WEB_URL,
-    shareSubject: 'Check out Capgo!',
-    title: 'Share Subject Test'
-  })
+    shareSubject: "Check out Capgo!",
+    title: "Share Subject Test",
+  });
 }
 
 async function openWebWithAllOptions() {
   InAppBrowser.openWebView({
     url: WEB_URL,
-    toolbarColor: '#FF5733',
-    toolbarTextColor: '#B9FFC6',
+    toolbarColor: "#FF5733",
+    toolbarTextColor: "#B9FFC6",
     showArrow: true,
     showReloadButton: true,
     closeModal: true,
-    closeModalTitle: 'Close Window',
-    closeModalDescription: 'Are you sure you want to close?',
-    closeModalOk: 'Yes, close',
-    closeModalCancel: 'No, stay',
+    closeModalTitle: "Close Window",
+    closeModalDescription: "Are you sure you want to close?",
+    closeModalOk: "Yes, close",
+    closeModalCancel: "No, stay",
     buttonNearDone: {
       ios: {
-        iconType: 'sf-symbol',
-        icon: 'star.fill'
+        iconType: "sf-symbol",
+        icon: "star.fill",
       },
       android: {
-        iconType: 'asset',
-        icon: 'public/monkey.svg',
+        iconType: "asset",
+        icon: "public/monkey.svg",
         width: 24,
-        height: 24
-      }
-    }
-  })
+        height: 24,
+      },
+    },
+  });
 }
 
 async function openSimple() {
-  InAppBrowser.open({ url: WEB_URL })
+  InAppBrowser.open({ url: WEB_URL });
 }
 
 async function openWithOptions() {
-  InAppBrowser.open({ 
+  InAppBrowser.open({
     url: WEB_URL,
-    isPresentAfterPageLoad: true
-  } as any)
+    isPresentAfterPageLoad: true,
+  } as any);
 }
 
 async function openWithInspectable() {
-  InAppBrowser.open({ 
+  InAppBrowser.open({
     url: WEB_URL,
-    isInspectable: true
-  } as any)
+    isInspectable: true,
+  } as any);
 }
 
 async function openWithShowArrow() {
   InAppBrowser.openWebView({
     url: WEB_URL,
     showArrow: true,
-    title: 'Show Arrow Only Test'
-  })
+    title: "Show Arrow Only Test",
+  });
 }
 
 async function openFlohkids() {
   const options = {
-    url: 'https://flohkids.de/',
+    url: "https://flohkids.de/",
     isAnimated: false,
     toolbarType: ToolBarType.BLANK,
     isPresentAfterPageLoad: true,
@@ -402,40 +485,46 @@ const scriptfloatButton = `
           childList: true, 
           subtree: true 
         });
-`
+`;
 async function openBlankWithCloseButton() {
   await InAppBrowser.openWebView({
     url: WEB_URL,
     toolbarType: ToolBarType.BLANK,
-    title: 'Blank With Close Button'
-  })
-  
-  // Wait for page to load before injecting the button
-  const listener = await InAppBrowser.addListener('browserPageLoaded', async () => {
-    // Inject a floating close button in the top right corner
-    await InAppBrowser.executeScript({
-      code:scriptfloatButton
-    });
-    listener.remove()
+    title: "Blank With Close Button",
   });
+
+  // Wait for page to load before injecting the button
+  const listener = await InAppBrowser.addListener(
+    "browserPageLoaded",
+    async () => {
+      // Inject a floating close button in the top right corner
+      await InAppBrowser.executeScript({
+        code: scriptfloatButton,
+      });
+      listener.remove();
+    }
+  );
 }
 
 async function openBlankWithCloseButtonAndColor() {
   await InAppBrowser.openWebView({
     url: WEB_URL,
     toolbarType: ToolBarType.BLANK,
-    toolbarColor: '#FF5733',
-    title: 'Blank With Close Button'
-  })
-  
-  // Wait for page to load before injecting the button
-  const listener = await InAppBrowser.addListener('browserPageLoaded', async () => {
-    // Inject a floating close button in the top right corner
-    await InAppBrowser.executeScript({
-      code:scriptfloatButton
-    });
-    listener.remove()
+    toolbarColor: "#FF5733",
+    title: "Blank With Close Button",
   });
+
+  // Wait for page to load before injecting the button
+  const listener = await InAppBrowser.addListener(
+    "browserPageLoaded",
+    async () => {
+      // Inject a floating close button in the top right corner
+      await InAppBrowser.executeScript({
+        code: scriptfloatButton,
+      });
+      listener.remove();
+    }
+  );
 }
 
 async function openBlankWithBidirectionalCommunication() {
@@ -443,13 +532,15 @@ async function openBlankWithBidirectionalCommunication() {
   await InAppBrowser.openWebView({
     url: WEB_URL,
     toolbarType: ToolBarType.BLANK,
-    title: 'Bidirectional Communication Test'
+    title: "Bidirectional Communication Test",
   });
   // Wait for the page to load, then inject the script for the floating button
-  const loadListener = await InAppBrowser.addListener('browserPageLoaded', async () => {
-    // Inject the script for bidirectional communication
-    await InAppBrowser.executeScript({
-      code: `
+  const loadListener = await InAppBrowser.addListener(
+    "browserPageLoaded",
+    async () => {
+      // Inject the script for bidirectional communication
+      await InAppBrowser.executeScript({
+        code: `
         // Create the button element
         const closeBtn = document.createElement('div');
         closeBtn.id = 'capgo-close-btn';
@@ -576,113 +667,114 @@ async function openBlankWithBidirectionalCommunication() {
             showConfirmDialog(event.detail.message);
           }
         });
-      `
-    });
-    loadListener.remove();
-  });
+      `,
+      });
+      loadListener.remove();
+    }
+  );
 }
 
 async function openDeepLinkTest() {
   InAppBrowser.openWebView({
-    url: 'https://aasa-tester.capgo.app/',
-    title: 'Deep Link Test'
-  })
+    url: "https://aasa-tester.capgo.app/",
+    title: "Deep Link Test",
+  });
 }
 
 async function openDeepLinkTestPrevent() {
   InAppBrowser.openWebView({
-    url: 'https://aasa-tester.capgo.app/',
-    title: 'Deep Link Test (Prevent)',
-    preventDeeplink: true
-  })
+    url: "https://aasa-tester.capgo.app/",
+    title: "Deep Link Test (Prevent)",
+    preventDeeplink: true,
+  });
 }
 
 async function openBrokenUrlWithButton() {
-  InAppBrowser.addListener('buttonNearDoneClick', async (msg) => {
-    console.log('buttonNearDoneClick on broken URL', msg)
+  InAppBrowser.addListener("buttonNearDoneClick", async (msg) => {
+    console.log("buttonNearDoneClick on broken URL", msg);
     // Try to navigate to a working URL to test button doesn't crash
-    await InAppBrowser.setUrl({ url: 'https://google.com' })
-  })
-  
-  InAppBrowser.addListener('pageLoadError', () => {
-    console.log('Page load error for broken URL')
-  })
-  
+    await InAppBrowser.setUrl({ url: "https://google.com" });
+  });
+
+  InAppBrowser.addListener("pageLoadError", () => {
+    console.log("Page load error for broken URL");
+  });
+
   InAppBrowser.openWebView({
-    url: 'https://this-is-a-broken-url-that-does-not-exist.invalid',
-    title: 'Broken URL Test',
+    url: "https://this-is-a-broken-url-that-does-not-exist.invalid",
+    title: "Broken URL Test",
     buttonNearDone: {
       ios: {
-        iconType: 'sf-symbol',
-        icon: 'arrow.clockwise'
+        iconType: "sf-symbol",
+        icon: "arrow.clockwise",
       },
       android: {
-        iconType: 'vector',
-        icon: 'ic_menu_rotate',
+        iconType: "vector",
+        icon: "ic_menu_rotate",
         width: 24,
-        height: 24
-      }
-    }
-  })
+        height: 24,
+      },
+    },
+  });
 }
 
 onMounted(async () => {
-  console.log('mounted')
-  
-  InAppBrowser.addListener('messageFromWebview', async (msg) => {
-    console.log('MESSAGE FROM WEB VIEW', msg)
+  console.log("mounted");
 
-    const message = (msg.detail.message) as string ?? ''
-    if (message === 'close') {
+  InAppBrowser.addListener("messageFromWebview", async (msg) => {
+    console.log("MESSAGE FROM WEB VIEW", msg);
+
+    const message = (msg.detail.message as string) ?? "";
+    if (message === "close") {
       // Send a message back to the webview asking for confirmation
       await InAppBrowser.postMessage({
         detail: {
-          action: 'confirmClose',
-          message: 'Are you sure you want to close?'
-        }
+          action: "confirmClose",
+          message: "Are you sure you want to close?",
+        },
       });
-      console.log('confirmClose send')
+      console.log("confirmClose send");
     }
     // If the message confirms the close action, close the webview
-    else if (message === 'closeConfirmed') {
+    else if (message === "closeConfirmed") {
       await InAppBrowser.close();
-      console.log('close confirmed')
+      console.log("close confirmed");
     }
-    if (message === 'clear-specific') {
-      console.log('magic')
-      const cookies = await InAppBrowser.getCookies({ url: WEB_URL })
+    if (message === "clear-specific") {
+      console.log("magic");
+      const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
       if (cookies.magicCount) {
-        console.log('del magic count')
-        InAppBrowser.clearCookies({ url: WEB_URL })
+        console.log("del magic count");
+        InAppBrowser.clearCookies({ url: WEB_URL });
       }
     }
-    if (message === 'clear-all') {
-      console.log('magic (clear all)')
-      const cookies = await InAppBrowser.getCookies({ url: WEB_URL })
+    if (message === "clear-all") {
+      console.log("magic (clear all)");
+      const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
       if (cookies.magicCount) {
-        console.log('del magic count')
-        InAppBrowser.clearAllCookies()
+        console.log("del magic count");
+        InAppBrowser.clearAllCookies();
       }
     }
-  })
-  InAppBrowser.addListener('buttonNearDoneClick', async (msg) => {
-    await InAppBrowser.setUrl({ url: 'https://web.capgo.app/login' })
-  })
+  });
+  InAppBrowser.addListener("buttonNearDoneClick", async (msg) => {
+    await InAppBrowser.setUrl({ url: "https://web.capgo.app/login" });
+  });
 
-  InAppBrowser.addListener('urlChangeEvent', (event) => {
-    console.log('URL changed:', event.url)
-  })
+  InAppBrowser.addListener("urlChangeEvent", (event) => {
+    console.log("URL changed:", event.url);
+  });
 
-  InAppBrowser.addListener('browserPageLoaded', () => {
-    console.log('Page loaded')
-  })
+  InAppBrowser.addListener("browserPageLoaded", () => {
+    console.log("Page loaded");
+  });
 
-  InAppBrowser.addListener('pageLoadError', () => {
-    console.log('Page load error')
-  })
+  InAppBrowser.addListener("pageLoadError", () => {
+    console.log("Page load error");
+  });
 
-  InAppBrowser.addListener('confirmBtnClicked', (event) => {
-    console.log('Confirm button clicked:', event.url)
-  })
-})
+  InAppBrowser.addListener("confirmBtnClicked", (event) => {
+    console.log("Confirm button clicked:", event.url);
+  });
+});
 </script>
