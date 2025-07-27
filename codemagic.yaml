@@ -1,6 +1,6 @@
 workflows:
   ionic-capacitor-ios-workflow-optimized:
-    name: Capacitor iOS Workflow (Optimized with Cache)
+    name: Capacitor iOS Workflow (Optimized)
     max_build_duration: 60
     environment:
       node: latest
@@ -23,8 +23,8 @@ workflows:
         script: |
           export PATH="$HOME/.bun/bin:$PATH"
           echo "Generating iOS project with minimal plugins..."
-          npx cap add ios --no-deps
-          npx cap sync ios --no-build
+          npx cap add ios
+          npx cap sync ios
       - name: Build iOS app (optimized)
         script: |
           cd ios/App
