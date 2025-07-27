@@ -1,10 +1,8 @@
 workflows:
-  ionic-capacitor-ios-workflow:
-    name: Capacitor iOS Workflow
+  ionic-capacitor-ios-workflow-no-capgo:
+    name: Capacitor iOS Workflow (No Capgo)
     max_build_duration: 120
     environment:
-      groups:
-        - capgo
       node: latest
     scripts:
       - name: Install Bun
@@ -16,15 +14,18 @@ workflows:
           export PATH="$HOME/.bun/bin:$PATH"
           bun install
           bun run build
-      - name: Install npm dependencies for Ionic project
-        script: |
-          export PATH="$HOME/.bun/bin:$PATH"
-          npx @capgo/cli login $CAPGO_TOKEN
       - name: Update dependencies and copy web assets to native project
         script: |
           export PATH="$HOME/.bun/bin:$PATH"
           npx cap sync
-      - name: Upload to Capgo
+      - name: Build iOS app
         script: |
-          export PATH="$HOME/.bun/bin:$PATH"
-          npx @capgo/cli upload
+          cd ios/App
+          pod install
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 15' -derivedDataPath build
+      - name: Create iOS bundle
+        script: |
+          cd ios/App/build/Build/Products/Debug-iphonesimulator
+          zip -r ../../../../../../ios-app.zip App.app
+    artifacts:
+      - ios-app.zip
