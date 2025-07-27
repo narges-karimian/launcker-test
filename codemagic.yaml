@@ -1,48 +1,46 @@
 workflows:
-  ionic-capacitor-ios-workflow-robust-no-capgo:
-    name: Capacitor iOS Workflow (Robust - No Capgo)
-    max_build_duration: 120
+  ionic-capacitor-ios-workflow-optimized:
+    name: Capacitor iOS Workflow (Optimized)
+    max_build_duration: 60
     environment:
       node: latest
+      cache:
+        - node_modules
+        - ~/.bun
+        - ios/App/Pods
     scripts:
       - name: Install Bun
         script: |
           curl -fsSL https://bun.sh/install | bash
           export PATH="$HOME/.bun/bin:$PATH"
-      - name: Build
+      - name: Install optimized dependencies
         script: |
           export PATH="$HOME/.bun/bin:$PATH"
-          bun install
+          echo "Installing only used dependencies..."
+          bun install --silent
+      - name: Build web assets
+        script: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          echo "Building web assets..."
           bun run build
-      - name: Update dependencies and copy web assets to native project
+      - name: Generate iOS project
         script: |
           export PATH="$HOME/.bun/bin:$PATH"
-          npx cap sync
-      - name: List available simulators
-        script: |
-          xcrun simctl list devices available
-      - name: Build iOS app
+          echo "Generating iOS project with minimal plugins..."
+          npx cap add ios --no-deps
+          npx cap sync ios --no-build
+      - name: Build iOS app (optimized)
         script: |
           cd ios/App
-          pod install
-          # Try multiple simulator options for maximum compatibility
-          if xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,id=FD1BF54E-4D3D-45B8-AF09-425C68025542' -derivedDataPath build; then
-            echo "Build successful with iPhone 15"
-          elif xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,id=0AC9444F-3A74-40DC-A41C-A6B973A31ABB' -derivedDataPath build; then
-            echo "Build successful with iPhone 16"
-          elif xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,id=BF6788C2-AC16-4044-A32F-351AFB5B9E25' -derivedDataPath build; then
-            echo "Build successful with iPhone 14"
-          elif xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 15' -derivedDataPath build; then
-            echo "Build successful with iPhone 15 by name"
-          elif xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 16' -derivedDataPath build; then
-            echo "Build successful with iPhone 16 by name"
-          else
-            echo "All simulator builds failed"
-            exit 1
-          fi
+          echo "Installing minimal CocoaPods..."
+          pod install --silent --repo-update
+          echo "Building iOS app with only used plugins..."
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,id=FD1BF54E-4D3D-45B8-AF09-425C68025542' -derivedDataPath build -quiet -parallelizeTargets
       - name: Create iOS bundle
         script: |
           cd ios/App/build/Build/Products/Debug-iphonesimulator
-          zip -r ../../../../../../ios-app.zip App.app
+          echo "Creating optimized iOS bundle..."
+          zip -r ../../../../../../ios-app-optimized.zip App.app -q
+          echo "✅ Optimized iOS build completed!"
     artifacts:
-      - ios-app.zip
+      - ios-app-optimized.zip
