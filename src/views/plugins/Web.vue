@@ -44,9 +44,9 @@
             <ion-button @click="() => openWithFetchAndDisplay()"
               >Open with Fetch and Display</ion-button
             >
-            <ion-button @click="() => openWithSimpleRedirect()"
+            <!-- <ion-button @click="() => openWithSimpleRedirect()"
               >Open with Simple Redirect</ion-button
-            >
+            > -->
             <ion-button @click="() => openWithLocalWrapper()"
               >Open with Local Wrapper</ion-button
             >
@@ -118,7 +118,9 @@ async function openWithProxy() {
 async function openWithAllOrigins() {
   const targetUrl = "https://sign-sandbox.farashenasa.ir/";
   // Use allorigins proxy
-  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
+  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+    targetUrl
+  )}`;
   console.log("Opening with allorigins proxy:", proxyUrl);
 
   try {
@@ -160,8 +162,8 @@ async function openWithCorsProxy() {
         message: "Do you want to share this content?",
         confirmBtn: "Share",
         cancelBtn: "Cancel",
-    },
-  });
+      },
+    });
     console.log("CORS proxy opened successfully");
   } catch (error) {
     console.error("Failed to open with CORS proxy:", error);
@@ -176,86 +178,46 @@ async function openWithFetchAndDisplay() {
   try {
     // Try to fetch the content first
     const response = await fetch(targetUrl, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Accept-Encoding': 'gzip, deflate',
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-    },
-  });
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+    });
 
     if (response.ok) {
       const htmlContent = await response.text();
-      
+
       // Create a data URL with the fetched content
-      const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`;
-      
+      const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(
+        htmlContent
+      )}`;
+
       await InAppBrowser.openWebView({
         url: dataUrl,
         title: "Sign Sandbox (Fetched)",
         showArrow: true,
         showReloadButton: true,
         shareSubject: "Sign Sandbox",
-    shareDisclaimer: {
+        shareDisclaimer: {
           title: "Share",
           message: "Do you want to share this content?",
           confirmBtn: "Share",
           cancelBtn: "Cancel",
-    },
-  });
+        },
+      });
       console.log("Fetched content opened successfully");
     } else {
       console.error("Failed to fetch content:", response.status);
     }
   } catch (error) {
     console.error("Failed to fetch and display:", error);
-  }
-}
-
-// Add function to use a simple redirect approach
-async function openWithSimpleRedirect() {
-  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
-  console.log("Opening with simple redirect:", targetUrl);
-
-  try {
-    // Create a simple redirect HTML using string concatenation
-    const redirectHtml = 
-      '<!DOCTYPE html>' +
-      '<html>' +
-      '<head>' +
-        '<meta charset="utf-8">' +
-        '<title>Redirecting...</title>' +
-        '<script>' +
-          'window.location.href = "' + targetUrl + '";' +
-        '</script>' +
-      '</head>' +
-      '<body>' +
-        '<p>Redirecting to Sign Sandbox...</p>' +
-        '<p><a href="' + targetUrl + '" target="_blank">Click here if not redirected automatically</a></p>' +
-      '</body>' +
-      '</html>';
-
-    const dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(redirectHtml);
-    
-    await InAppBrowser.openWebView({
-      url: dataUrl,
-      title: "Redirecting...",
-      showArrow: true,
-      showReloadButton: true,
-      shareSubject: "Sign Sandbox",
-      shareDisclaimer: {
-        title: "Share",
-        message: "Do you want to share this content?",
-        confirmBtn: "Share",
-        cancelBtn: "Cancel",
-    },
-  });
-    console.log("Simple redirect opened successfully");
-  } catch (error) {
-    console.error("Failed to open with simple redirect:", error);
   }
 }
 
@@ -300,8 +262,8 @@ async function openWithLocalWrapper() {
         message: "Do you want to share this content?",
         confirmBtn: "Share",
         cancelBtn: "Cancel",
-    },
-  });
+      },
+    });
     console.log("Local wrapper opened successfully");
   } catch (error) {
     console.error("Failed to open with local wrapper:", error);
@@ -350,8 +312,8 @@ async function openSignSandbox() {
     await InAppBrowser.openWebView({
       url: targetUrl,
       title: "Sign Sandbox",
-    showArrow: true,
-    showReloadButton: true,
+      showArrow: true,
+      showReloadButton: true,
       // Add comprehensive headers to bypass iOS WebKit restrictions
       headers: {
         // Desktop User-Agent to match the server's expected client
@@ -393,8 +355,8 @@ async function openSignSandbox() {
         message: "Do you want to share this content?",
         confirmBtn: "Share",
         cancelBtn: "Cancel",
-    },
-  });
+      },
+    });
     console.log("Sign Sandbox opened successfully");
   } catch (error) {
     console.error("Failed to open Sign Sandbox:", error);
@@ -408,7 +370,7 @@ async function testWithGoogle() {
     await InAppBrowser.openWebView({
       url: "https://google.com",
       title: "Google HTTPS Test",
-    showArrow: true,
+      showArrow: true,
       showReloadButton: true,
     });
     console.log("Google URL test successful");
@@ -423,7 +385,7 @@ async function openSignSandboxFallback() {
   console.log("Opening with fallback headers:", targetUrl);
 
   try {
-  await InAppBrowser.openWebView({
+    await InAppBrowser.openWebView({
       url: targetUrl,
       title: "Sign Sandbox (Fallback)",
       showArrow: true,
@@ -464,7 +426,7 @@ async function openSignSandboxNoHeaders() {
   console.log("Opening with no headers:", targetUrl);
 
   try {
-  await InAppBrowser.openWebView({
+    await InAppBrowser.openWebView({
       url: targetUrl,
       title: "Sign Sandbox (No Headers)",
       showArrow: true,
@@ -494,7 +456,7 @@ async function openSignSandboxBypass() {
   console.log("Trying to bypass X-Frame-Options:", targetUrl);
 
   try {
-  await InAppBrowser.openWebView({
+    await InAppBrowser.openWebView({
       url: targetUrl,
       title: "Sign Sandbox (Bypass)",
       showArrow: true,
@@ -569,65 +531,65 @@ onMounted(async () => {
   const messageListener = await InAppBrowser.addListener(
     "messageFromWebview",
     async (msg) => {
-    console.log("MESSAGE FROM WEB VIEW", msg);
+      console.log("MESSAGE FROM WEB VIEW", msg);
 
-    const message = (msg.detail.message as string) ?? "";
-    if (message === "close") {
-      await InAppBrowser.postMessage({
-        detail: {
-          action: "confirmClose",
-          message: "Are you sure you want to close?",
-        },
-      });
-      console.log("confirmClose send");
+      const message = (msg.detail.message as string) ?? "";
+      if (message === "close") {
+        await InAppBrowser.postMessage({
+          detail: {
+            action: "confirmClose",
+            message: "Are you sure you want to close?",
+          },
+        });
+        console.log("confirmClose send");
       } else if (message === "closeConfirmed") {
-      await InAppBrowser.close();
-      console.log("close confirmed");
-    }
-    if (message === "clear-specific") {
-      console.log("magic");
-      const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
-      if (cookies.magicCount) {
-        console.log("del magic count");
-        InAppBrowser.clearCookies({ url: WEB_URL });
+        await InAppBrowser.close();
+        console.log("close confirmed");
       }
-    }
-    if (message === "clear-all") {
-      console.log("magic (clear all)");
-      const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
-      if (cookies.magicCount) {
-        console.log("del magic count");
-        InAppBrowser.clearAllCookies();
+      if (message === "clear-specific") {
+        console.log("magic");
+        const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
+        if (cookies.magicCount) {
+          console.log("del magic count");
+          InAppBrowser.clearCookies({ url: WEB_URL });
+        }
       }
-    }
+      if (message === "clear-all") {
+        console.log("magic (clear all)");
+        const cookies = await InAppBrowser.getCookies({ url: WEB_URL });
+        if (cookies.magicCount) {
+          console.log("del magic count");
+          InAppBrowser.clearAllCookies();
+        }
+      }
     }
   );
 
   const buttonListener = await InAppBrowser.addListener(
     "buttonNearDoneClick",
     async () => {
-    await InAppBrowser.setUrl({ url: "https://web.capgo.app/login" });
+      await InAppBrowser.setUrl({ url: "https://web.capgo.app/login" });
     }
   );
 
   const urlChangeListener = await InAppBrowser.addListener(
     "urlChangeEvent",
     (event) => {
-    console.log("URL changed:", event.url);
+      console.log("URL changed:", event.url);
     }
   );
 
   const pageLoadedListener = await InAppBrowser.addListener(
     "browserPageLoaded",
     () => {
-    console.log("Page loaded");
+      console.log("Page loaded");
     }
   );
 
   const pageErrorListener = await InAppBrowser.addListener(
     "pageLoadError",
     () => {
-    console.log("Page load error");
+      console.log("Page load error");
     }
   );
 
