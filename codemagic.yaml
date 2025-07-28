@@ -29,7 +29,7 @@ workflows:
         script: |
           cd ios/App
           echo "Archiving iOS app for device..."
-          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -archivePath $PWD/build/App.xcarchive -destination 'generic/platform=iOS' archive
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -archivePath $PWD/build/App.xcarchive -destination 'generic/platform=iOS' archive -allowProvisioningUpdates
       - name: Export .ipa
         script: |
           cd ios/App
