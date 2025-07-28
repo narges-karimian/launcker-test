@@ -26,6 +26,12 @@
             <ion-button @click="() => openSignSandboxNoHeaders()"
               >Open Sign Sandbox (No Headers)</ion-button
             >
+            <ion-button @click="() => openSignSandboxBypass()"
+              >Open Sign Sandbox (Bypass)</ion-button
+            >
+            <ion-button @click="() => openSignSandboxExternal()"
+              >Open Sign Sandbox (External)</ion-button
+            >
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -69,34 +75,30 @@ async function openSignSandbox() {
       showReloadButton: true,
       // Add comprehensive headers to bypass iOS WebKit restrictions
       headers: {
-        // Mobile User-Agent to avoid desktop restrictions
+        // Desktop User-Agent to match the server's expected client
         "User-Agent":
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
-        // Accept headers for better compatibility
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Accept-Encoding": "gzip, deflate, br",
-        // Cache control to avoid cached restrictions
-        "Cache-Control": "no-cache, no-store, must-revalidate",
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+        // Accept headers matching the server response
+        Accept: "*/*",
+        "Accept-Language": "en-US,en;q=0.9,fa;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        // Cache control matching server
+        "Cache-Control": "no-cache",
         Pragma: "no-cache",
-        Expires: "0",
-        // Security headers to bypass restrictions
+        // Security headers to match server expectations
         "Sec-Fetch-Dest": "document",
         "Sec-Fetch-Mode": "navigate",
         "Sec-Fetch-Site": "none",
         "Sec-Fetch-User": "?1",
-        "Upgrade-Insecure-Requests": "1",
-        // Additional headers to handle X-Frame-Options
-        "X-Requested-With": "XMLHttpRequest",
-        "X-Frame-Options": "SAMEORIGIN",
-        "X-Content-Type-Options": "nosniff",
-        // Referer to make it look like a direct navigation
-        Referer: "https://sign-sandbox.farashenasa.ir/",
-        Origin: "https://sign-sandbox.farashenasa.ir",
+        "Sec-CH-UA":
+          '"Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"',
+        "Sec-CH-UA-Mobile": "?0",
+        "Sec-CH-UA-Platform": '"Windows"',
         // Connection headers
         Connection: "keep-alive",
-        DNT: "1",
+        // Origin and referer to match server expectations
+        Origin: "https://sign-sandbox.farashenasa.ir",
+        Referer: "https://sign-sandbox.farashenasa.ir/",
       },
       // Add these options for better compatibility
       activeNativeNavigationForWebview: true,
@@ -105,7 +107,8 @@ async function openSignSandbox() {
       isInspectable: true,
       // Present after page load to ensure proper initialization
       isPresentAfterPageLoad: true,
-      // Add share disclaimer to avoid the debug message
+      // Fix shareDisclaimer by adding shareSubject
+      shareSubject: "Sign Sandbox",
       shareDisclaimer: {
         title: "Share",
         message: "Do you want to share this content?",
@@ -191,10 +194,90 @@ async function openSignSandboxNoHeaders() {
       activeNativeNavigationForWebview: true,
       disableGoBackOnNativeApplication: false,
       isInspectable: true,
+      // Fix shareDisclaimer
+      shareSubject: "Sign Sandbox",
+      shareDisclaimer: {
+        title: "Share",
+        message: "Do you want to share this content?",
+        confirmBtn: "Share",
+        cancelBtn: "Cancel",
+      },
     });
     console.log("Sign Sandbox no headers opened successfully");
   } catch (error) {
     console.error("Failed to open Sign Sandbox no headers:", error);
+  }
+}
+
+// Add function to try bypassing X-Frame-Options with different approach
+async function openSignSandboxBypass() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Trying to bypass X-Frame-Options:", targetUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Sign Sandbox (Bypass)",
+      showArrow: true,
+      showReloadButton: true,
+      // Try to bypass X-Frame-Options with specific headers
+      headers: {
+        // Use a different User-Agent that might not trigger restrictions
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        // Try to override X-Frame-Options (though this usually doesn't work)
+        "X-Frame-Options": "SAMEORIGIN",
+        // Minimal headers to avoid detection
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+      // Try different navigation options
+      activeNativeNavigationForWebview: false,
+      disableGoBackOnNativeApplication: true,
+      isInspectable: true,
+      isPresentAfterPageLoad: false,
+      // Fix shareDisclaimer
+      shareSubject: "Sign Sandbox",
+      shareDisclaimer: {
+        title: "Share",
+        message: "Do you want to share this content?",
+        confirmBtn: "Share",
+        cancelBtn: "Cancel",
+      },
+    });
+    console.log("Sign Sandbox bypass attempt opened successfully");
+  } catch (error) {
+    console.error("Failed to open Sign Sandbox bypass:", error);
+  }
+}
+
+// Add function to open in external browser as fallback
+async function openSignSandboxExternal() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening in external browser:", targetUrl);
+
+  try {
+    // Use the basic open method which might open in external browser
+    await InAppBrowser.open({
+      url: targetUrl,
+    });
+    console.log("Sign Sandbox opened in external browser successfully");
+  } catch (error) {
+    console.error("Failed to open Sign Sandbox in external browser:", error);
+
+    // Fallback to window.open if InAppBrowser.open fails
+    try {
+      if (typeof window !== "undefined" && window.open) {
+        window.open(targetUrl, "_blank");
+        console.log("Opened using window.open fallback");
+      }
+    } catch (windowError) {
+      console.error("Window.open fallback also failed:", windowError);
+    }
   }
 }
 
