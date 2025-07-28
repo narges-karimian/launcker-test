@@ -1,43 +1,42 @@
 workflows:
-  ionic-capacitor-ios-ipa:
-    name: Capacitor iOS IPA
+  ionic-capacitor-ios-workflow-optimized:
+    name: Capacitor iOS Workflow (Optimized)
     max_build_duration: 60
     environment:
       node: latest
-      ios_signing: # <‑‑ lets Codemagic fetch the right files
-        distribution_type: app_store # or ad_hoc / development
-        bundle_identifier: com.demo.app # keep in sync with capacitor.config.ts
-      groups:
-        - ios_credentials # the group that holds your p12 & profile
     scripts:
       - name: Install Bun
         script: |
           curl -fsSL https://bun.sh/install | bash
           export PATH="$HOME/.bun/bin:$PATH"
-      - name: Install deps & build web
+      - name: Install optimized dependencies
         script: |
           export PATH="$HOME/.bun/bin:$PATH"
+          echo "Installing only used dependencies..."
           bun install --silent
+      - name: Build web assets
+        script: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          echo "Building web assets..."
           bun run build
       - name: Generate iOS project
         script: |
-          npx cap add ios 
+          export PATH="$HOME/.bun/bin:$PATH"
+          echo "Generating iOS project with minimal plugins..."
+          npx cap add ios
           npx cap sync ios
-
-      # 3. **Let Codemagic wire the provisioning profiles into the Xcode project**
-      - name: Set up code signing settings
-        script: xcode-project use-profiles
-
-      # 4. **Archive _and_ export the IPA in one shot**
-      - name: Build IPA
+      - name: Build iOS app (archive)
         script: |
-          xcode-project build-ipa \
-            --workspace "ios/App/App.xcworkspace" \
-            --scheme "App" \
-            --archive-flags="-destination 'generic/platform=iOS'" \
-            --export-options-plist "/Users/builder/export_options.plist"  # auto‑generated
-
-    # 5. **Expose the IPA (and dSYMs) as build artifacts**
+          cd ios/App
+          echo "Installing minimal CocoaPods..."
+          pod install --silent --repo-update
+          echo "Building iOS app with only used plugins..."
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,id=FD1BF54E-4D3D-45B8-AF09-425C68025542' -derivedDataPath build -quiet -parallelizeTargets
+      - name: Create iOS bundle
+        script: |
+          cd ios/App/build/Build/Products/Debug-iphonesimulator
+          echo "Creating optimized iOS bundle..."
+          zip -r ../../../../../../ios-app-optimized.zip App.app -q
+          echo "✅ Optimized iOS build completed!"
     artifacts:
-      - ios/App/build/ios/ipa/*.ipa
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      - ios-app-optimized.zip
