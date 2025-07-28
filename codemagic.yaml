@@ -25,13 +25,16 @@ workflows:
           echo "Generating iOS project with minimal plugins..."
           npx cap add ios
           npx cap sync ios
-      - name: Build iOS app (optimized)
+      - name: Build iOS app (archive)
         script: |
           cd ios/App
-          echo "Installing minimal CocoaPods..."
-          pod install --silent --repo-update
-          echo "Building iOS app with only used plugins..."
-          xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,id=FD1BF54E-4D3D-45B8-AF09-425C68025542' -derivedDataPath build -quiet -parallelizeTargets
+          echo "Archiving iOS app for device..."
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -archivePath $PWD/build/App.xcarchive -destination 'generic/platform=iOS' archive
+      - name: Export .ipa
+        script: |
+          cd ios/App
+          echo "Exporting .ipa..."
+          xcodebuild -exportArchive -archivePath $PWD/build/App.xcarchive -exportPath $PWD/build/ipa -exportOptionsPlist ExportOptions.plist
       - name: Create iOS bundle
         script: |
           cd ios/App/build/Build/Products/Debug-iphonesimulator
@@ -39,4 +42,4 @@ workflows:
           zip -r ../../../../../../ios-app-optimized.zip App.app -q
           echo "✅ Optimized iOS build completed!"
     artifacts:
-      - ios-app-optimized.zip
+      - ios/App/build/ipa/*.ipa
