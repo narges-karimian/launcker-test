@@ -70,8 +70,21 @@
 				<false/>
 				<key>NSIncludesSubdomains</key>
 				<true/>
+				<key>NSExceptionAllowsArbitraryLoads</key>
+				<true/>
 			</dict>
-			<key>capgo.app</key>
+			<key>google.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<false/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>example.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<false/>
@@ -123,12 +136,8 @@
   </array>
 	<key>WKAppBoundDomains</key>
 	<array>
-		<string>example.com</string>
-		<string>google.com</string>
-		<string>capgo.app</string>
 		<string>sign-sandbox.farashenasa.ir</string>
-		<string>localhost</string>
-		<string>127.0.0.1</string>
+		<string>farashenasa.ir</string>
 	</array>
 </dict>
 </plist>
