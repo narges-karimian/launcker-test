@@ -138,6 +138,15 @@
 	<array>
 		<string>sign-sandbox.farashenasa.ir</string>
 		<string>farashenasa.ir</string>
+		<string>localhost</string>
+		<string>127.0.0.1</string>
 	</array>
+	<key>WKWebViewConfiguration</key>
+	<dict>
+		<key>allowsInlineMediaPlayback</key>
+		<true/>
+		<key>mediaTypesRequiringUserActionForPlayback</key>
+		<array/>
+	</dict>
 </dict>
 </plist>

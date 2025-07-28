@@ -3,94 +3,32 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button default-href="#"></ion-back-button>
+          <ion-back-button defaultHref="/home"></ion-back-button>
         </ion-buttons>
-        <ion-title>Capgo cloud demo (clicker)</ion-title>
+        <ion-title>Web</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-grid style="height: 100%">
-        <ion-row
-          class="ion-align-items-center ion-justify-content-center"
-          style="height: 100%"
-        >
+      <ion-grid>
+        <ion-row>
           <ion-col size="auto" style="text-align: center">
-            <strong>openWebView</strong>
-            <ion-button @click="() => openWeb()">web simple open</ion-button>
+            <strong>WebView</strong>
+            <ion-button @click="() => openWebWithPickerMaterial()"
+              >web share with picker material</ion-button
+            >
+            <ion-button @click="() => openWebWithPickerOld()"
+              >web share with picker old</ion-button
+            >
+            <ion-button @click="() => openWeb()">open web</ion-button>
             <ion-button @click="() => openWebDarkMode()"
-              >web with script dark reader</ion-button
-            >
-            <ion-button
-              v-if="isAndroid"
-              @click="() => openWebWithPickerMaterial()"
-              >web with picker material (Android)</ion-button
-            >
-            <ion-button v-if="isAndroid" @click="() => openWebWithPickerOld()"
-              >web with picker old (Android)</ion-button
-            >
-            <ion-button v-if="isIOS" @click="() => openWebWithPickerOld()"
-              >web with picker</ion-button
+              >web dark mode</ion-button
             >
             <ion-button @click="() => openWebWithHeaders()"
               >web with headers</ion-button
             >
             <ion-button @click="() => openWebWithCredentials()"
               >web with credentials</ion-button
-            >
-            <ion-button @click="() => openWebWithCustomToolbar()"
-              >web with custom toolbar</ion-button
-            >
-            <ion-button @click="() => openWebWithoutNativeNav()"
-              >web without native nav</ion-button
-            >
-            <ion-button @click="() => openWebWithReload()"
-              >web with reload</ion-button
-            >
-            <ion-button @click="() => openWebWithCloseModal()"
-              >web with close modal</ion-button
-            >
-            <ion-button @click="() => openWebWithCustomButton()"
-              >web with custom button</ion-button
-            >
-            <ion-button @click="() => openWebWithCustomButtonSVG()"
-              >web with custom button svg</ion-button
-            >
-            <ion-button @click="() => openWebWithMediaCapture()"
-              >web with media capture</ion-button
-            >
-            <ion-button @click="() => openWebWithMicrophone()"
-              >web with microphone</ion-button
-            >
-            <ion-button @click="() => openWebWithMultipleUpload()"
-              >web with multiple upload</ion-button
-            >
-            <ion-button @click="() => openWebWithSingleUpload()"
-              >web with single upload</ion-button
-            >
-            <ion-button @click="() => openWebWithWebcam()"
-              >web with webcam test</ion-button
-            >
-            <ion-button @click="() => openWebWithActivityToolbar()"
-              >web with activity toolbar</ion-button
-            >
-            <ion-button @click="() => openWebWithNavigationToolbar()"
-              >web with navigation toolbar</ion-button
-            >
-            <ion-button @click="() => openWebWithDefaultToolbar()"
-              >web with default toolbar</ion-button
-            >
-            <ion-button @click="() => openWebWithTextZoom()"
-              >web with text zoom</ion-button
-            >
-            <ion-button @click="() => openBlankWithCloseButton()"
-              >blank with floating close button</ion-button
-            >
-            <ion-button @click="() => openBlankWithCloseButtonAndColor()"
-              >blank with floating close button and color</ion-button
-            >
-            <ion-button @click="() => openWebWithShareSubject()"
-              >web with share subject</ion-button
             >
             <ion-button @click="() => openWebWithDisclaimer()"
               >web share with disclaimer</ion-button
@@ -127,25 +65,106 @@
               >open inspectable</ion-button
             >
           </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Add Sign Sandbox Testing Section -->
+      <ion-grid>
+        <ion-row>
           <ion-col size="auto" style="text-align: center">
-            <strong>URL Testing</strong>
-            <ion-button @click="() => testSimpleUrl()"
+            <strong>Sign Sandbox Testing</strong>
+            <ion-button @click="() => testSignSandbox()"
+              >Test Sign Sandbox</ion-button
+            >
+            <ion-button @click="() => testSignSandboxSimple()"
+              >Simple Test</ion-button
+            >
+            <ion-button @click="() => testDefaultHeaders()"
+              >Default Headers</ion-button
+            >
+            <ion-button @click="() => testMobileHeaders()"
+              >Mobile Headers</ion-button
+            >
+            <ion-button @click="() => testDesktopHeaders()"
+              >Desktop Headers</ion-button
+            >
+            <ion-button @click="() => testBypassHeaders()"
+              >Bypass Headers</ion-button
+            >
+            <ion-button @click="() => testSignSandboxWithDifferentHeaders()"
+              >Test All Headers</ion-button
+            >
+            <ion-button @click="() => testWithErrorHandling()"
+              >Error Handling Test</ion-button
+            >
+            <ion-button @click="() => openInExternalBrowser()"
+              >External Browser</ion-button
+            >
+            <ion-button @click="() => openInNewTab()">New Tab</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Add URL Testing Section -->
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto" style="text-align: center">
+            <strong>URL Testing & Debug</strong>
+            <ion-button @click="() => testWithExample()"
               >Test Example.com</ion-button
             >
-            <ion-button @click="() => testGoogleUrl()"
+            <ion-button @click="() => testWithGoogle()"
               >Test Google.com</ion-button
-            >
-            <ion-button @click="() => testCapgoUrl()"
-              >Test Capgo.app</ion-button
             >
             <ion-button @click="() => testOriginalUrl()"
               >Test Original URL</ion-button
             >
-            <ion-button @click="() => progressiveUrlTest()"
+            <ion-button @click="() => testUrlWithAccessibilityCheck()"
+              >Test with Check</ion-button
+            >
+            <ion-button @click="() => progressiveUrlTesting()"
               >Progressive Test</ion-button
             >
-            <ion-button @click="() => testUrlWithValidation()"
-              >Test with Validation</ion-button
+            <ion-button @click="() => getDebugInfo()">Debug Info</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Add Header Testing Section -->
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto" style="text-align: center">
+            <strong>Header Testing</strong>
+            <ion-button @click="() => openSignSandboxWithHeaders()"
+              >With Headers</ion-button
+            >
+            <ion-button @click="() => openSignSandboxWithMobileHeaders()"
+              >Mobile Headers</ion-button
+            >
+            <ion-button @click="() => openSignSandboxWithBypassHeaders()"
+              >Bypass Headers</ion-button
+            >
+            <ion-button @click="() => testSignSandboxWithDifferentHeaders()"
+              >Test All Headers</ion-button
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Add Simple Test Section -->
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto" style="text-align: center">
+            <strong>Simple Tests</strong>
+            <ion-button @click="() => simpleTest()">Simple Test</ion-button>
+            <ion-button @click="() => openSignSandbox()"
+              >Open Sign Sandbox</ion-button
+            >
+            <ion-button @click="() => openSignSandboxSimple()"
+              >Open Simple</ion-button
+            >
+            <ion-button @click="() => openSignSandboxWithCheck()"
+              >Open with Check</ion-button
             >
           </ion-col>
         </ion-row>
@@ -174,9 +193,6 @@ import { ToolBarType, BackgroundColor } from "@capgo/inappbrowser";
 import { Capacitor } from "@capacitor/core";
 
 const WEB_URL = "https://sign-sandbox.farashenasa.ir/";
-const isIOS = Capacitor.getPlatform() === "ios";
-const isAndroid = Capacitor.getPlatform() === "android";
-
 const TEST_URLS = {
   simple: "https://example.com",
   google: "https://google.com",
@@ -184,51 +200,17 @@ const TEST_URLS = {
   original: "https://sign-sandbox.farashenasa.ir/",
 };
 
-async function testSimpleUrl() {
-  console.log("Testing with simple HTTPS URL");
-
+// Keep only the functions that are actually used in the template
+async function validateUrl(url: string): Promise<boolean> {
   try {
-    await InAppBrowser.openWebView({
-      url: TEST_URLS.simple,
-      title: "Simple HTTPS Test",
-      showArrow: true,
-      showReloadButton: true,
+    await fetch(url, {
+      method: "HEAD",
+      mode: "no-cors",
     });
-    console.log("Simple URL test successful");
+    return true;
   } catch (error) {
-    console.error("Simple URL test failed:", error);
-  }
-}
-
-async function testGoogleUrl() {
-  console.log("Testing with Google HTTPS URL");
-
-  try {
-    await InAppBrowser.openWebView({
-      url: TEST_URLS.google,
-      title: "Google HTTPS Test",
-      showArrow: true,
-      showReloadButton: true,
-    });
-    console.log("Google URL test successful");
-  } catch (error) {
-    console.error("Google URL test failed:", error);
-  }
-}
-
-async function testCapgoUrl() {
-  console.log("Testing with Capgo HTTPS URL");
-
-  try {
-    await InAppBrowser.openWebView({
-      url: TEST_URLS.capgo,
-      title: "Capgo HTTPS Test",
-      showArrow: true,
-      showReloadButton: true,
-    });
-    console.log("Capgo URL test successful");
-  } catch (error) {
-    console.error("Capgo URL test failed:", error);
+    console.error(`URL validation failed for ${url}:`, error);
+    return false;
   }
 }
 
@@ -248,8 +230,8 @@ async function testOriginalUrl() {
   }
 }
 
-async function progressiveUrlTest() {
-  console.log("Starting progressive URL test...");
+async function progressiveUrlTesting() {
+  console.log("Starting progressive URL testing...");
 
   const testUrls = [
     { name: "Example.com", url: TEST_URLS.simple },
@@ -259,66 +241,45 @@ async function progressiveUrlTest() {
   ];
 
   for (const test of testUrls) {
-    console.log(`Testing: ${test.name} (${test.url})`);
+    console.log(`\n--- Testing: ${test.name} ---`);
 
-    try {
-      await InAppBrowser.openWebView({
-        url: test.url,
-        title: `Test: ${test.name}`,
-        showArrow: true,
-        showReloadButton: true,
-      });
+    // First check accessibility
+    const isAccessible = await validateUrl(test.url);
+    console.log(`Accessibility check: ${isAccessible ? "PASS" : "FAIL"}`);
 
-      console.log(`✅ ${test.name} - SUCCESS`);
-
-      // Wait a bit before testing next URL
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Close the browser
-      await InAppBrowser.close();
-    } catch (error) {
-      console.error(`❌ ${test.name} - FAILED:`, error);
-
-      // Try to close if it's open
+    if (isAccessible) {
       try {
+        await InAppBrowser.openWebView({
+          url: test.url,
+          title: `Test: ${test.name}`,
+          showArrow: true,
+          showReloadButton: true,
+        });
+
+        console.log(`✅ ${test.name} - InAppBrowser SUCCESS`);
+
+        // Wait and close
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         await InAppBrowser.close();
-      } catch (closeError) {
-        console.log("Could not close browser:", closeError);
+      } catch (error) {
+        console.error(`❌ ${test.name} - InAppBrowser FAILED:`, error);
+
+        // Try to close if it's open
+        try {
+          await InAppBrowser.close();
+        } catch (closeError) {
+          console.log("Could not close browser:", closeError);
+        }
       }
+    } else {
+      console.log(`⏭️ ${test.name} - SKIPPED (not accessible)`);
     }
 
     // Wait before next test
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
   }
 
-  console.log("Progressive URL test completed");
-}
-
-async function validateUrl(url: string): Promise<boolean> {
-  try {
-    const response = await fetch(url, {
-      method: "HEAD",
-      mode: "no-cors",
-    });
-    return true;
-  } catch (error) {
-    console.error(`URL validation failed for ${url}:`, error);
-    return false;
-  }
-}
-
-async function testUrlWithValidation() {
-  const url = TEST_URLS.original;
-  console.log(`Validating URL: ${url}`);
-
-  const isValid = await validateUrl(url);
-  if (isValid) {
-    console.log("URL is accessible, testing in InAppBrowser...");
-    await testOriginalUrl();
-  } else {
-    console.log("URL is not accessible, trying alternative...");
-    await testCapgoUrl();
-  }
+  console.log("\n--- Progressive URL testing completed ---");
 }
 
 async function getDebugInfo() {
@@ -405,42 +366,6 @@ async function openWebWithDisclaimer() {
   });
 }
 
-async function openWebWithCustomToolbar() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    toolbarType: ToolBarType.ACTIVITY,
-    toolbarColor: "#FF5733",
-    toolbarTextColor: "#B9FFC6",
-    showArrow: true,
-  });
-}
-
-async function openWebWithoutNativeNav() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    activeNativeNavigationForWebview: false,
-    disableGoBackOnNativeApplication: true,
-  });
-}
-
-async function openWebWithReload() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    showReloadButton: true,
-  });
-}
-
-async function openWebWithCloseModal() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    closeModal: true,
-    closeModalTitle: "Close Window",
-    closeModalDescription: "Are you sure you want to close?",
-    closeModalOk: "Yes, close",
-    closeModalCancel: "No, stay",
-  });
-}
-
 async function openWebWithCustomButton() {
   InAppBrowser.addListener("buttonNearDoneClick", async (msg) => {
     console.log("buttonNearDoneClick", msg);
@@ -482,81 +407,6 @@ async function openWebWithCustomButtonSVG() {
         height: 24,
       },
     },
-  });
-}
-
-async function openWebWithMediaCapture() {
-  await InAppBrowser.openWebView({
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/capture",
-    title: "Camera Test",
-  });
-}
-
-async function openWebWithMicrophone() {
-  InAppBrowser.openWebView({
-    url: "https://webcammictest.com/check-mic.html",
-    title: "Microphone Test",
-  });
-}
-
-async function openWebWithMultipleUpload() {
-  InAppBrowser.openWebView({
-    url: "https://www.patternfly.org/components/file-upload/multiple-file-upload",
-    title: "Multiple File Upload Test",
-  });
-}
-
-async function openWebWithSingleUpload() {
-  InAppBrowser.openWebView({
-    url: "https://www.patternfly.org/components/file-upload/simple-file-upload",
-    title: "Single File Upload Test",
-  });
-}
-
-async function openWebWithWebcam() {
-  InAppBrowser.openWebView({
-    url: "https://webcammictest.com/",
-    title: "Webcam Test",
-  });
-}
-
-async function openWebWithTextZoom() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    textZoom: 150,
-    title: "Text Zoom Test",
-  } as any);
-}
-
-async function openWebWithActivityToolbar() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    toolbarType: ToolBarType.ACTIVITY,
-    title: "Activity Toolbar Test",
-  });
-}
-
-async function openWebWithNavigationToolbar() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    toolbarType: ToolBarType.NAVIGATION,
-    title: "Navigation Toolbar Test",
-  });
-}
-
-async function openWebWithDefaultToolbar() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    toolbarType: ToolBarType.ACTIVITY,
-    title: "Default Toolbar Test",
-  });
-}
-
-async function openWebWithShareSubject() {
-  InAppBrowser.openWebView({
-    url: WEB_URL,
-    shareSubject: "Check out Capgo!",
-    title: "Share Subject Test",
   });
 }
 
@@ -629,7 +479,7 @@ const scriptfloatButton = `
        // Create the button element
         const closeBtn = document.createElement('div');
         closeBtn.id = 'capgo-close-btn';
-        
+
         // Style it as a round red button with white cross
         closeBtn.style.position = 'fixed';
         closeBtn.style.top = '20px';
@@ -644,29 +494,29 @@ const scriptfloatButton = `
         closeBtn.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
         closeBtn.style.zIndex = '2147483647'; // Maximum z-index value
         closeBtn.style.cursor = 'pointer';
-        
+
         // Add the cross icon
         closeBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-        
+
         // Add click event to close the webview
         closeBtn.addEventListener('click', () => {
           window.mobileApp.close();
         });
-        
+
         // Add the button to the document root to ensure highest level
         document.documentElement.appendChild(closeBtn);
-        
+
         // Create a MutationObserver to ensure the button isn't removed
         const observer = new MutationObserver(() => {
           if (!document.getElementById('capgo-close-btn')) {
             document.documentElement.appendChild(closeBtn);
           }
         });
-        
+
         // Start observing the document for changes
-        observer.observe(document.documentElement, { 
-          childList: true, 
-          subtree: true 
+        observer.observe(document.documentElement, {
+          childList: true,
+          subtree: true
         });
 `;
 async function openBlankWithCloseButton() {
@@ -689,13 +539,6 @@ async function openBlankWithCloseButton() {
   );
 }
 
-async function openBlankWithCloseButtonAndColor() {
-  await InAppBrowser.openWebView({
-    url: WEB_URL,
-    toolbarType: ToolBarType.BLANK,
-    toolbarColor: "#FF5733",
-    title: "Blank With Close Button",
-  });
 
   // Wait for page to load before injecting the button
   const listener = await InAppBrowser.addListener(
@@ -727,7 +570,7 @@ async function openBlankWithBidirectionalCommunication() {
         // Create the button element
         const closeBtn = document.createElement('div');
         closeBtn.id = 'capgo-close-btn';
-        
+
         // Style it as a round red button with white cross
         closeBtn.style.position = 'fixed';
         closeBtn.style.top = '20px';
@@ -742,18 +585,18 @@ async function openBlankWithBidirectionalCommunication() {
         closeBtn.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.2)';
         closeBtn.style.zIndex = '2147483647'; // Maximum z-index value
         closeBtn.style.cursor = 'pointer';
-        
+
         // Add the cross icon
         closeBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-        
+
         // Add click event to send close message to the app
         closeBtn.addEventListener('click', () => {
           window.mobileApp.postMessage({ detail: { message: 'close' } });
         });
-        
+
         // Add the button to the document root
         document.documentElement.appendChild(closeBtn);
-        
+
         // Function to create and show the confirmation dialog
         function showConfirmDialog(message) {
           // Create modal container
@@ -769,7 +612,7 @@ async function openBlankWithBidirectionalCommunication() {
           modal.style.justifyContent = 'center';
           modal.style.alignItems = 'center';
           modal.style.zIndex = '2147483646';
-          
+
           // Create modal content
           const modalContent = document.createElement('div');
           modalContent.style.backgroundColor = 'white';
@@ -778,18 +621,18 @@ async function openBlankWithBidirectionalCommunication() {
           modalContent.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
           modalContent.style.maxWidth = '300px';
           modalContent.style.textAlign = 'center';
-          
+
           // Add message
           const messageEl = document.createElement('p');
           messageEl.textContent = message;
           messageEl.style.marginBottom = '20px';
-          
+
           // Create buttons container
           const buttonContainer = document.createElement('div');
           buttonContainer.style.display = 'flex';
           buttonContainer.style.justifyContent = 'center';
           buttonContainer.style.gap = '10px';
-          
+
           // Create Yes button
           const yesButton = document.createElement('button');
           yesButton.textContent = 'Yes';
@@ -799,7 +642,7 @@ async function openBlankWithBidirectionalCommunication() {
           yesButton.style.border = 'none';
           yesButton.style.borderRadius = '4px';
           yesButton.style.cursor = 'pointer';
-          
+
           // Create No button
           const noButton = document.createElement('button');
           noButton.textContent = 'No';
@@ -809,41 +652,41 @@ async function openBlankWithBidirectionalCommunication() {
           noButton.style.border = 'none';
           noButton.style.borderRadius = '4px';
           noButton.style.cursor = 'pointer';
-          
+
           // Add event listeners to buttons
           yesButton.addEventListener('click', () => {
             document.body.removeChild(modal);
             window.mobileApp.postMessage({ detail: { message: 'closeConfirmed' } });
           });
-          
+
           noButton.addEventListener('click', () => {
             document.body.removeChild(modal);
           });
-          
+
           // Assemble the modal
           buttonContainer.appendChild(noButton);
           buttonContainer.appendChild(yesButton);
           modalContent.appendChild(messageEl);
           modalContent.appendChild(buttonContainer);
           modal.appendChild(modalContent);
-          
+
           // Add to document
           document.body.appendChild(modal);
         }
-        
+
         // Create a MutationObserver to ensure the button isn't removed
         const observer = new MutationObserver(() => {
           if (!document.getElementById('capgo-close-btn')) {
             document.documentElement.appendChild(closeBtn);
           }
         });
-        
+
         // Start observing the document for changes
-        observer.observe(document.documentElement, { 
-          childList: true, 
-          subtree: true 
+        observer.observe(document.documentElement, {
+          childList: true,
+          subtree: true
         });
-        
+
         // Listen for messages from the native app - FIXED
         window.addEventListener("messageFromNative", (event) => {
           if (event && event.detail && event.detail.action === 'confirmClose') {
@@ -901,6 +744,493 @@ async function openBrokenUrlWithButton() {
   });
 }
 
+// Add these functions to handle headers and X-Frame-Options
+async function openSignSandboxWithHeaders() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening with custom headers:", targetUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Sign Sandbox",
+      showArrow: true,
+      showReloadButton: true,
+      // Add custom headers to bypass X-Frame-Options
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        DNT: "1",
+        Connection: "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Cache-Control": "max-age=0",
+      },
+      // Add these options for better compatibility
+      activeNativeNavigationForWebview: true,
+      disableGoBackOnNativeApplication: false,
+      isInspectable: true,
+      isPresentAfterPageLoad: true,
+    });
+    console.log("Sign Sandbox opened with headers successfully");
+  } catch (error) {
+    console.error("Failed to open with headers:", error);
+  }
+}
+
+async function openSignSandboxWithMobileHeaders() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening with mobile headers:", targetUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Sign Sandbox Mobile",
+      showArrow: true,
+      showReloadButton: true,
+      // Mobile-specific headers
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        Referer: "https://sign-sandbox.farashenasa.ir/",
+        Origin: "https://sign-sandbox.farashenasa.ir",
+      },
+    });
+    console.log("Sign Sandbox opened with mobile headers successfully");
+  } catch (error) {
+    console.error("Failed to open with mobile headers:", error);
+  }
+}
+
+async function openSignSandboxWithBypassHeaders() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening with bypass headers:", targetUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Sign Sandbox Bypass",
+      showArrow: true,
+      showReloadButton: true,
+      // Headers to bypass X-Frame-Options restrictions
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+      },
+    });
+    console.log("Sign Sandbox opened with bypass headers successfully");
+  } catch (error) {
+    console.error("Failed to open with bypass headers:", error);
+  }
+}
+
+// Add a function to test different header combinations
+async function testSignSandboxWithDifferentHeaders() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Testing different header combinations for:", targetUrl);
+
+  const headerConfigs = [
+    {
+      name: "Default Headers",
+      headers: {},
+    },
+    {
+      name: "Mobile Headers",
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1",
+      },
+    },
+    {
+      name: "Desktop Headers",
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      },
+    },
+    {
+      name: "Bypass Headers",
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+    },
+  ];
+
+  for (const config of headerConfigs) {
+    console.log(`\n--- Testing: ${config.name} ---`);
+
+    try {
+      await InAppBrowser.openWebView({
+        url: targetUrl,
+        title: `Test: ${config.name}`,
+        showArrow: true,
+        showReloadButton: true,
+        headers: config.headers,
+      });
+
+      console.log(`✅ ${config.name} - SUCCESS`);
+
+      // Wait and close
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await InAppBrowser.close();
+    } catch (error) {
+      console.error(`❌ ${config.name} - FAILED:`, error);
+
+      // Try to close if it's open
+      try {
+        await InAppBrowser.close();
+      } catch (closeError) {
+        console.log("Could not close browser:", closeError);
+      }
+    }
+
+    // Wait before next test
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+
+  console.log("\n--- Header testing completed ---");
+}
+
+async function testSignSandbox() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Testing Sign Sandbox:", targetUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Sign Sandbox Test",
+      showArrow: true,
+      showReloadButton: true,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1",
+      },
+    });
+    console.log("Sign Sandbox test successful");
+  } catch (error) {
+    console.error("Sign Sandbox test failed:", error);
+  }
+}
+
+async function testSignSandboxSimple() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Simple test for:", targetUrl);
+
+  try {
+    await InAppBrowser.open({ url: targetUrl });
+    console.log("Simple test successful");
+  } catch (error) {
+    console.error("Simple test failed:", error);
+  }
+}
+
+async function testDefaultHeaders() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Testing with default headers");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Default Headers Test",
+      showArrow: true,
+      showReloadButton: true,
+    });
+    console.log("Default headers test successful");
+  } catch (error) {
+    console.error("Default headers test failed:", error);
+  }
+}
+
+async function testMobileHeaders() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Testing with mobile headers");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Mobile Headers Test",
+      showArrow: true,
+      showReloadButton: true,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1",
+      },
+    });
+    console.log("Mobile headers test successful");
+  } catch (error) {
+    console.error("Mobile headers test failed:", error);
+  }
+}
+
+async function testDesktopHeaders() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Testing with desktop headers");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Desktop Headers Test",
+      showArrow: true,
+      showReloadButton: true,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      },
+    });
+    console.log("Desktop headers test successful");
+  } catch (error) {
+    console.error("Desktop headers test failed:", error);
+  }
+}
+
+async function testBypassHeaders() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Testing with bypass headers");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Bypass Headers Test",
+      showArrow: true,
+      showReloadButton: true,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+    });
+    console.log("Bypass headers test successful");
+  } catch (error) {
+    console.error("Bypass headers test failed:", error);
+  }
+}
+
+async function testWithErrorHandling() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Testing with error handling:", targetUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Error Handling Test",
+      showArrow: true,
+      showReloadButton: true,
+    });
+
+    console.log("Test successful");
+
+    // Add listeners for debugging
+    const errorListener = await InAppBrowser.addListener(
+      "pageLoadError",
+      (error) => {
+        console.error("Page load error:", error);
+      }
+    );
+
+    const loadListener = await InAppBrowser.addListener(
+      "browserPageLoaded",
+      () => {
+        console.log("Page loaded successfully");
+      }
+    );
+
+    // Store listeners
+    listeners.push(errorListener, loadListener);
+  } catch (error) {
+    console.error("Test failed:", error);
+  }
+}
+
+async function openInExternalBrowser() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening in external browser:", targetUrl);
+
+  try {
+    // Use window.open as fallback if Browser plugin not available
+    if (typeof window !== "undefined" && window.open) {
+      window.open(targetUrl, "_blank");
+      console.log("Opened in external browser successfully");
+    } else {
+      console.log("External browser not available");
+    }
+  } catch (error) {
+    console.error("Failed to open in external browser:", error);
+  }
+}
+
+async function openInNewTab() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening in new tab:", targetUrl);
+
+  try {
+    // Create a link and click it
+    const link = document.createElement("a");
+    link.href = targetUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    console.log("Opened in new tab successfully");
+  } catch (error) {
+    console.error("Failed to open in new tab:", error);
+  }
+}
+
+async function testWithExample() {
+  console.log("Testing with Example HTTPS URL");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: TEST_URLS.simple,
+      title: "Example HTTPS Test",
+      showArrow: true,
+      showReloadButton: true,
+    });
+    console.log("Example URL test successful");
+  } catch (error) {
+    console.error("Example URL test failed:", error);
+  }
+}
+
+async function testWithGoogle() {
+  console.log("Testing with Google HTTPS URL");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: TEST_URLS.google,
+      title: "Google HTTPS Test",
+      showArrow: true,
+      showReloadButton: true,
+    });
+    console.log("Google URL test successful");
+  } catch (error) {
+    console.error("Google URL test failed:", error);
+  }
+}
+
+async function testUrlWithAccessibilityCheck() {
+  const url = TEST_URLS.original;
+  console.log(`Validating URL: ${url}`);
+
+  const isValid = await validateUrl(url);
+  if (isValid) {
+    console.log("URL is accessible, testing in InAppBrowser...");
+    await testOriginalUrl();
+  } else {
+    console.log("URL is not accessible, trying alternative...");
+    await InAppBrowser.openWebView({
+      url: TEST_URLS.capgo,
+      title: "Capgo Test",
+    });
+  }
+}
+
+async function simpleTest() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Simple test for:", targetUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Simple Test",
+    });
+    console.log("Simple test successful");
+  } catch (error) {
+    console.error("Simple test failed:", error);
+  }
+}
+
+async function openSignSandbox() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening:", targetUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: targetUrl,
+      title: "Sign Sandbox",
+      showArrow: true,
+      showReloadButton: true,
+      // Add these options for better compatibility
+      activeNativeNavigationForWebview: true,
+      disableGoBackOnNativeApplication: false,
+      // Add share disclaimer to avoid the debug message
+      shareDisclaimer: {
+        title: "Share",
+        message: "Do you want to share this content?",
+        confirmBtn: "Share",
+        cancelBtn: "Cancel",
+      },
+    });
+    console.log("Sign Sandbox opened successfully");
+  } catch (error) {
+    console.error("Failed to open Sign Sandbox:", error);
+  }
+}
+
+async function openSignSandboxSimple() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening simple:", targetUrl);
+
+  try {
+    await InAppBrowser.open({ url: targetUrl });
+    console.log("Sign Sandbox opened successfully (simple)");
+  } catch (error) {
+    console.error("Failed to open Sign Sandbox (simple):", error);
+  }
+}
+
+async function openSignSandboxWithCheck() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening with check:", targetUrl);
+
+  const isAccessible = await validateUrl(targetUrl);
+
+  if (isAccessible) {
+    console.log("URL is accessible, opening in InAppBrowser...");
+    await openSignSandbox();
+  } else {
+    console.log("URL is not accessible, trying alternative method...");
+    await openSignSandboxSimple();
+  }
+}
+
 onMounted(async () => {
   console.log("mounted");
   await getDebugInfo();
@@ -945,7 +1275,7 @@ onMounted(async () => {
 
   const buttonListener = await InAppBrowser.addListener(
     "buttonNearDoneClick",
-    async (msg) => {
+    async () => {
       await InAppBrowser.setUrl({ url: "https://web.capgo.app/login" });
     }
   );
