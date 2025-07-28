@@ -28,13 +28,10 @@ workflows:
       - name: Build iOS app (archive)
         script: |
           cd ios/App
-          echo "Archiving iOS app for device..."
-          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -archivePath $PWD/build/App.xcarchive -destination 'generic/platform=iOS' archive -allowProvisioningUpdates
-      - name: Export .ipa
-        script: |
-          cd ios/App
-          echo "Exporting .ipa..."
-          xcodebuild -exportArchive -archivePath $PWD/build/App.xcarchive -exportPath $PWD/build/ipa -exportOptionsPlist ExportOptions.plist
+          echo "Installing minimal CocoaPods..."
+          pod install --silent --repo-update
+          echo "Building iOS app with only used plugins..."
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug -destination 'platform=iOS Simulator,id=FD1BF54E-4D3D-45B8-AF09-425C68025542' -derivedDataPath build -quiet -parallelizeTargets
       - name: Create iOS bundle
         script: |
           cd ios/App/build/Build/Products/Debug-iphonesimulator
@@ -42,4 +39,4 @@ workflows:
           zip -r ../../../../../../ios-app-optimized.zip App.app -q
           echo "✅ Optimized iOS build completed!"
     artifacts:
-      - ios/App/build/ipa/*.ipa
+      - ios-app-optimized.zip
