@@ -8,11 +8,10 @@ const config: CapacitorConfig = {
     androidScheme: 'https',
     cleartext: true,
     allowNavigation: [
-      'https://sign-sandbox.farashenasa.ir/*',
-      'https://capgo.app/*',
-      'https://aasa-tester.capgo.app/*',
-      'https://web.capgo.app/*',
+      'https://example.com/*',
       'https://google.com/*',
+      'https://capgo.app/*',
+      'https://sign-sandbox.farashenasa.ir/*',
       'http://localhost:*',
       'http://127.0.0.1:*'
     ]
@@ -26,12 +25,18 @@ const config: CapacitorConfig = {
     InAppBrowser: {
       // Configure allowed domains
       allowedDomains: [
-        'sign-sandbox.farashenasa.ir',
+        'example.com',
+        'google.com',
         'capgo.app',
-        'aasa-tester.capgo.app',
-        'web.capgo.app',
-        'google.com'
-      ]
+        'sign-sandbox.farashenasa.ir'
+      ],
+      // Enable JavaScript execution for these domains
+      enableJavaScript: true,
+      // Configure security settings
+      securitySettings: {
+        allowArbitraryLoads: true,
+        allowLocalNetworking: true
+      }
     }
   }
 };

@@ -127,6 +127,27 @@
               >open inspectable</ion-button
             >
           </ion-col>
+          <ion-col size="auto" style="text-align: center">
+            <strong>URL Testing</strong>
+            <ion-button @click="() => testSimpleUrl()"
+              >Test Example.com</ion-button
+            >
+            <ion-button @click="() => testGoogleUrl()"
+              >Test Google.com</ion-button
+            >
+            <ion-button @click="() => testCapgoUrl()"
+              >Test Capgo.app</ion-button
+            >
+            <ion-button @click="() => testOriginalUrl()"
+              >Test Original URL</ion-button
+            >
+            <ion-button @click="() => progressiveUrlTest()"
+              >Progressive Test</ion-button
+            >
+            <ion-button @click="() => testUrlWithValidation()"
+              >Test with Validation</ion-button
+            >
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-content>
@@ -155,6 +176,166 @@ import { Capacitor } from "@capacitor/core";
 const WEB_URL = "https://sign-sandbox.farashenasa.ir/";
 const isIOS = Capacitor.getPlatform() === "ios";
 const isAndroid = Capacitor.getPlatform() === "android";
+
+const TEST_URLS = {
+  simple: "https://example.com",
+  google: "https://google.com",
+  capgo: "https://capgo.app",
+  original: "https://sign-sandbox.farashenasa.ir/",
+};
+
+async function testSimpleUrl() {
+  console.log("Testing with simple HTTPS URL");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: TEST_URLS.simple,
+      title: "Simple HTTPS Test",
+      showArrow: true,
+      showReloadButton: true,
+    });
+    console.log("Simple URL test successful");
+  } catch (error) {
+    console.error("Simple URL test failed:", error);
+  }
+}
+
+async function testGoogleUrl() {
+  console.log("Testing with Google HTTPS URL");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: TEST_URLS.google,
+      title: "Google HTTPS Test",
+      showArrow: true,
+      showReloadButton: true,
+    });
+    console.log("Google URL test successful");
+  } catch (error) {
+    console.error("Google URL test failed:", error);
+  }
+}
+
+async function testCapgoUrl() {
+  console.log("Testing with Capgo HTTPS URL");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: TEST_URLS.capgo,
+      title: "Capgo HTTPS Test",
+      showArrow: true,
+      showReloadButton: true,
+    });
+    console.log("Capgo URL test successful");
+  } catch (error) {
+    console.error("Capgo URL test failed:", error);
+  }
+}
+
+async function testOriginalUrl() {
+  console.log("Testing with original URL");
+
+  try {
+    await InAppBrowser.openWebView({
+      url: TEST_URLS.original,
+      title: "Original URL Test",
+      showArrow: true,
+      showReloadButton: true,
+    });
+    console.log("Original URL test successful");
+  } catch (error) {
+    console.error("Original URL test failed:", error);
+  }
+}
+
+async function progressiveUrlTest() {
+  console.log("Starting progressive URL test...");
+
+  const testUrls = [
+    { name: "Example.com", url: TEST_URLS.simple },
+    { name: "Google.com", url: TEST_URLS.google },
+    { name: "Capgo.app", url: TEST_URLS.capgo },
+    { name: "Original URL", url: TEST_URLS.original },
+  ];
+
+  for (const test of testUrls) {
+    console.log(`Testing: ${test.name} (${test.url})`);
+
+    try {
+      await InAppBrowser.openWebView({
+        url: test.url,
+        title: `Test: ${test.name}`,
+        showArrow: true,
+        showReloadButton: true,
+      });
+
+      console.log(`✅ ${test.name} - SUCCESS`);
+
+      // Wait a bit before testing next URL
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Close the browser
+      await InAppBrowser.close();
+    } catch (error) {
+      console.error(`❌ ${test.name} - FAILED:`, error);
+
+      // Try to close if it's open
+      try {
+        await InAppBrowser.close();
+      } catch (closeError) {
+        console.log("Could not close browser:", closeError);
+      }
+    }
+
+    // Wait before next test
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+
+  console.log("Progressive URL test completed");
+}
+
+async function validateUrl(url: string): Promise<boolean> {
+  try {
+    const response = await fetch(url, {
+      method: "HEAD",
+      mode: "no-cors",
+    });
+    return true;
+  } catch (error) {
+    console.error(`URL validation failed for ${url}:`, error);
+    return false;
+  }
+}
+
+async function testUrlWithValidation() {
+  const url = TEST_URLS.original;
+  console.log(`Validating URL: ${url}`);
+
+  const isValid = await validateUrl(url);
+  if (isValid) {
+    console.log("URL is accessible, testing in InAppBrowser...");
+    await testOriginalUrl();
+  } else {
+    console.log("URL is not accessible, trying alternative...");
+    await testCapgoUrl();
+  }
+}
+
+async function getDebugInfo() {
+  console.log("=== DEBUG INFO ===");
+  console.log("Platform:", Capacitor.getPlatform());
+  console.log("Test URLs:", TEST_URLS);
+
+  // Check network connectivity
+  try {
+    const response = await fetch("https://httpbin.org/get");
+    console.log("Network connectivity:", response.ok);
+  } catch (error) {
+    console.log("Network connectivity failed:", error);
+  }
+
+  console.log("=== END DEBUG INFO ===");
+}
 
 let listeners: any[] = [];
 
@@ -722,6 +903,7 @@ async function openBrokenUrlWithButton() {
 
 onMounted(async () => {
   console.log("mounted");
+  await getDebugInfo();
 
   // Store listener references for cleanup
   const messageListener = await InAppBrowser.addListener(

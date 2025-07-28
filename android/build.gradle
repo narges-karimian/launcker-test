@@ -5,6 +5,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://maven.myket.ir'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.7.1'
@@ -21,7 +24,13 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io/' }
+        maven { url 'https://maven.myket.ir' }
+    }
+    
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.collection:collection:1.1.0'
+        }
     }
 }
 

@@ -19,3 +19,10 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep Phenotype related classes
+-keep class com.google.android.gms.phenotype.** { *; }
+-keep class com.google.android.gms.clearcut.** { *; }
+
+# Keep your app's package for Phenotype
+-keep class com.demo.app.** { *; }
