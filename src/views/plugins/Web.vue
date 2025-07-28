@@ -32,6 +32,21 @@
             <ion-button @click="() => openSignSandboxExternal()"
               >Open Sign Sandbox (External)</ion-button
             >
+            <ion-button @click="() => openWithProxy()"
+              >Open with Proxy</ion-button
+            >
+            <ion-button @click="() => openWithAllOrigins()"
+              >Open with AllOrigins</ion-button
+            >
+            <ion-button @click="() => openWithLocalWrapper()"
+              >Open with Local Wrapper</ion-button
+            >
+            <ion-button @click="() => openWithWindowOpen()"
+              >Open with window.open</ion-button
+            >
+            <ion-button @click="() => openWithLocationHref()"
+              >Open with location.href</ion-button
+            >
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -62,6 +77,145 @@ defineOptions({
 });
 
 const WEB_URL = "https://sign-sandbox.farashenasa.ir/";
+
+// Add function to use a proxy service
+async function openWithProxy() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  // Use a CORS proxy to bypass restrictions
+  const proxyUrl = `https://cors-anywhere.herokuapp.com/${targetUrl}`;
+  console.log("Opening with proxy:", proxyUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: proxyUrl,
+      title: "Sign Sandbox (Proxy)",
+      showArrow: true,
+      showReloadButton: true,
+      shareSubject: "Sign Sandbox",
+      shareDisclaimer: {
+        title: "Share",
+        message: "Do you want to share this content?",
+        confirmBtn: "Share",
+        cancelBtn: "Cancel",
+      },
+    });
+    console.log("Proxy opened successfully");
+  } catch (error) {
+    console.error("Failed to open with proxy:", error);
+  }
+}
+
+// Add function to use a different proxy
+async function openWithAllOrigins() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  // Use allorigins proxy
+  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+    targetUrl
+  )}`;
+  console.log("Opening with allorigins proxy:", proxyUrl);
+
+  try {
+    await InAppBrowser.openWebView({
+      url: proxyUrl,
+      title: "Sign Sandbox (AllOrigins)",
+      showArrow: true,
+      showReloadButton: true,
+      shareSubject: "Sign Sandbox",
+      shareDisclaimer: {
+        title: "Share",
+        message: "Do you want to share this content?",
+        confirmBtn: "Share",
+        cancelBtn: "Cancel",
+      },
+    });
+    console.log("AllOrigins proxy opened successfully");
+  } catch (error) {
+    console.error("Failed to open with AllOrigins proxy:", error);
+  }
+}
+
+// Add function to create a local HTML wrapper
+async function openWithLocalWrapper() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening with local wrapper:", targetUrl);
+
+  try {
+    // Create a simple HTML wrapper that loads the target URL
+    const wrapperHtml = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sign Sandbox Wrapper</title>
+        <style>
+          body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+          iframe { width: 100%; height: 100%; border: none; }
+        </style>
+      </head>
+      <body>
+        <iframe src="${targetUrl}" allowfullscreen></iframe>
+      </body>
+      </html>
+    `;
+
+    // Convert to data URL
+    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(
+      wrapperHtml
+    )}`;
+
+    await InAppBrowser.openWebView({
+      url: dataUrl,
+      title: "Sign Sandbox (Wrapper)",
+      showArrow: true,
+      showReloadButton: true,
+      shareSubject: "Sign Sandbox",
+      shareDisclaimer: {
+        title: "Share",
+        message: "Do you want to share this content?",
+        confirmBtn: "Share",
+        cancelBtn: "Cancel",
+      },
+    });
+    console.log("Local wrapper opened successfully");
+  } catch (error) {
+    console.error("Failed to open with local wrapper:", error);
+  }
+}
+
+// Add function to use window.open directly
+async function openWithWindowOpen() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening with window.open:", targetUrl);
+
+  try {
+    if (typeof window !== "undefined" && window.open) {
+      window.open(targetUrl, "_blank", "noopener,noreferrer");
+      console.log("Window.open opened successfully");
+    } else {
+      console.log("Window.open not available");
+    }
+  } catch (error) {
+    console.error("Failed to open with window.open:", error);
+  }
+}
+
+// Add function to use location.href
+async function openWithLocationHref() {
+  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  console.log("Opening with location.href:", targetUrl);
+
+  try {
+    if (typeof window !== "undefined" && window.location) {
+      window.location.href = targetUrl;
+      console.log("Location.href opened successfully");
+    } else {
+      console.log("Location.href not available");
+    }
+  } catch (error) {
+    console.error("Failed to open with location.href:", error);
+  }
+}
 
 async function openSignSandbox() {
   const targetUrl = "https://sign-sandbox.farashenasa.ir/";
