@@ -15,7 +15,9 @@
           <ion-col size="auto" style="text-align: center">
             <strong>Test URLs</strong>
             <ion-button @click="() => openWeb()">web simple open</ion-button>
-
+            <ion-button @click="() => openWebFarashenasa()"
+              >web farashenasa open</ion-button
+            >
             <ion-button @click="() => openSignSandbox()"
               >Open Sign Sandbox</ion-button
             >
@@ -87,7 +89,7 @@ defineOptions({
   name: "WebViewPage",
 });
 
-const WEB_URL = "https://bd9f9595cded.ngrok-free.app";
+const WEB_URL = "https://sign.farashenasa.ir/";
 
 async function openWeb() {
   InAppBrowser.openWebView({
@@ -95,9 +97,15 @@ async function openWeb() {
   });
 }
 
+async function openWebFarashenasa() {
+  InAppBrowser.openWebView({
+    url: "https://73cb6761899a.ngrok-free.app/",
+  });
+}
+
 // Add function to use a proxy service
 async function openWithProxy() {
-  const targetUrl = "https://sign-sandbox.farashenasa.ir/";
+  const targetUrl = "https://sign.farashenasa.ir/";
   // Use a CORS proxy to bypass restrictions
   const proxyUrl = `https://cors-anywhere.herokuapp.com/${targetUrl}`;
   console.log("Opening with proxy:", proxyUrl);
