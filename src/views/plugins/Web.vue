@@ -14,6 +14,8 @@
         <ion-row>
           <ion-col size="auto" style="text-align: center">
             <strong>Test URLs</strong>
+            <ion-button @click="() => openWeb()">web simple open</ion-button>
+
             <ion-button @click="() => openSignSandbox()"
               >Open Sign Sandbox</ion-button
             >
@@ -85,7 +87,13 @@ defineOptions({
   name: "WebViewPage",
 });
 
-const WEB_URL = "https://sign-sandbox.farashenasa.ir/";
+const WEB_URL = "https://bd9f9595cded.ngrok-free.app";
+
+async function openWeb() {
+  InAppBrowser.openWebView({
+    url: WEB_URL,
+  });
+}
 
 // Add function to use a proxy service
 async function openWithProxy() {
