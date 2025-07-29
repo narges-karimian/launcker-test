@@ -14,10 +14,17 @@
         <ion-row>
           <ion-col size="auto" style="text-align: center">
             <strong>Test URLs</strong>
+            <ion-item>
+              <ion-label position="stacked">Enter URL</ion-label>
+              <ion-input
+                v-model="WEB_URL_FARASHENASA"
+                placeholder="https://example.com"
+              />
+            </ion-item>
+            <ion-button @click="() => openWebFarashenasa()">
+              Open Entered URL
+            </ion-button>
             <ion-button @click="() => openWeb()">web simple open</ion-button>
-            <ion-button @click="() => openWebFarashenasa()"
-              >web farashenasa open</ion-button
-            >
             <ion-button @click="() => openSignSandbox()"
               >Open Sign Sandbox</ion-button
             >
@@ -81,8 +88,11 @@ import {
   IonBackButton,
   IonGrid,
   IonButtons,
+  IonItem,
+  IonLabel,
+  IonInput,
 } from "@ionic/vue";
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 // Define component name for linter
 defineOptions({
@@ -90,6 +100,8 @@ defineOptions({
 });
 
 const WEB_URL = "https://sign.farashenasa.ir/";
+
+const WEB_URL_FARASHENASA = ref("");
 
 async function openWeb() {
   InAppBrowser.openWebView({
@@ -99,7 +111,7 @@ async function openWeb() {
 
 async function openWebFarashenasa() {
   InAppBrowser.openWebView({
-    url: "https://73cb6761899a.ngrok-free.app/",
+    url: WEB_URL_FARASHENASA.value,
   });
 }
 
